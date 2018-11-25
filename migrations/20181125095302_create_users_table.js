@@ -1,47 +1,36 @@
-exports.up = function (knex, Promise) {
-    return Promise.all([
+exports.up = knex => knex.schema
 
-        knex.schema.createTable('events', function (table) {
-            table.increments('id')
-                .primary()
-                .unique();
+    .createTable('events', function (table) {
+        table.increments('id').primary().unique();
 
-            table.dateTime('datetime')
-                .notNullable();
+        table.dateTime('datetime').notNullable();
 
-            table.enu('status', ['created', 'sent'])
-                .defaultTo('created');
+        table.enu('status', ['created', 'sent'])
+            .defaultTo('created');
 
-            table.string('foreignId');
+        table.string('foreignId');
 
-            table.string('location')
-                .notNullable();
+        table.string('location')
+            .notNullable();
 
-            table.integer('objectId')
-                .notNullable();
+        table.integer('objectId')
+            .notNullable();
 
-            // table.foreign('objectId').references('id').inTable('objects');
-        }),
+        // table.foreign('objectId').references('id').inTable('objects');
+    })
 
-        knex.schema.createTable('objects', function (table) {
-            table.increments('id')
-                .primary()
-                .unique();
+    .createTable('objects', function (table) {
+        table.increments('id')
+            .primary()
+            .unique();
 
-            table.string('model')
-                .notNullable();
+        table.string('model')
+            .notNullable();
 
-            table.string('plate');
-        })
+        table.string('plate');
+    });
 
-        // ...
-    ])
-};
 
-exports.down = function (knex, Promise) {
-    return Promise.all([
-        knex.schema.raw('DROP TABLE events CASCADE'),
-        knex.schema.raw('DROP TABLE objects CASCADE')
-        // ...
-    ])
-};
+exports.down = knex => knex.schema
+        .raw('DROP TABLE events CASCADE')
+        .raw('DROP TABLE objects CASCADE');
