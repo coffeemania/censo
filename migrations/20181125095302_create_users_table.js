@@ -13,13 +13,11 @@ exports.up = knex => knex.schema
         table.string('location')
             .notNullable();
 
-        table.integer('objectId')
+        table.integer('vehicleId')
             .notNullable();
-
-        // table.foreign('objectId').references('id').inTable('objects');
     })
 
-    .createTable('objects', function (table) {
+    .createTable('vehicles', function (table) {
         table.increments('id')
             .primary()
             .unique();
@@ -33,4 +31,4 @@ exports.up = knex => knex.schema
 
 exports.down = knex => knex.schema
         .raw('DROP TABLE events CASCADE')
-        .raw('DROP TABLE objects CASCADE');
+        .raw('DROP TABLE vehicles CASCADE');
