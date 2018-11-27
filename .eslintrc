@@ -1,0 +1,56 @@
+{
+  "extends": "@earnest/eslint-config-es7",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "rules": {
+    //    "indent": [2, 4, {"SwitchCase": 1}],
+    "indent": "off",
+    "no-native-reassign": "off",
+    "no-confusing-arrow": "off",
+    "no-empty": "off",
+    "max-len": "off",
+    "padded-blocks": "off",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "one-var": "off",
+    "dot-notation": "off",
+    "prefer-const": "warn",
+    "camelcase": 1,
+    "quotes": [1, "single"],
+    "new-cap": 0,
+    "no-undef": 0,
+    "no-unused-vars": 0,
+    "no-unused-expressions": 0,
+    "curly": "off",
+    "consistent-return": 0,
+    "no-mixed-requires": 0,
+    "eqeqeq": 0,
+    "no-trailing-spaces": [2, { "skipBlankLines": true }],
+    //    "async-await/space-after-async": 2,
+    //    "async-await/space-after-await": 2,
+    "radix": 0
+  },
+  "globals": {
+    "LI": false,
+    "LIModules": false,
+    "Inject": false,
+    "_": false,
+    "module": true,
+    "require": false, //true,
+    "exports": false,
+    "window": false,
+    "dust": false,
+    "WebTracking": false,
+    "Raphael": false,
+    "fs": false,
+    "Fiber": false,
+    "$": false,
+    "jQuery": false
+  }
+}
