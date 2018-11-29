@@ -19,7 +19,10 @@ class Event extends Component {
 
     render() {
         return (
-            <Button onClick={this.onClick}>Click me</Button>
+            <div>
+                <p>{this.props.test}</p>
+                <Button onClick={this.onClick}>Click me</Button>
+            </div>
         );
     }
 }

@@ -6,7 +6,8 @@ import reducer from '../reducers';
 
 
 const initialState = {
-    events: []
+    events: [],
+    test: ''
     // ...
 };
 

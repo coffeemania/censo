@@ -7,7 +7,8 @@ import {
 
 function mapStateToProps(state) {
   return {
-    events: state.events
+    events: state.events,
+      test: state.test
   };
 }
 

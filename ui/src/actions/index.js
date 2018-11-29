@@ -1,7 +1,16 @@
 
 export function onToggle(msg) {
     return async (dispatch) => {
-        console.log(`onToggle msg: ${msg}`);
+        // went to backend
+
+        console.log('onToggle');
+
+        dispatch({
+            type: 'GOT_DATA',
+            data: {
+                msg:'hello!'
+            }
+        });
     };
 }
 

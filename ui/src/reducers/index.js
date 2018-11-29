@@ -3,13 +3,15 @@ export default function reducer(state = {}, action) {
 
     switch (action.type) {
 
-        case 'action_type':
+        case 'GOT_DATA':
 
             // action.data
 
+            // console.log(action.data);
+
             return {
                 ...state,
-                test: {}
+                test: action.data.msg
             };
 
         // ...
