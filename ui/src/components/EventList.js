@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { Button } from 'semantic-ui-react'
+import Event from './Event';
 
 
-class Event extends Component {
+class EventList extends Component {
 
     constructor(props) {
         super(props);
@@ -20,10 +20,18 @@ class Event extends Component {
 
     render() {
 
+        const Events = Object.entries(this.props.events || {}).map((event) =>
+            (<Event
+                key={event.id}
+                id={event.id}
+                {...event}
+            />)
+        );
+
         return (
-            <div>{JSON.stringify(this.props)}</div>
+            <div>{Events}</div>
         );
     }
 }
 
-export default Event;
+export default EventList;

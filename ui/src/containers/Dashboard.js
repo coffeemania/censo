@@ -59,7 +59,7 @@ class Dashboard extends Component {
                 </Visibility>
 
                 <Container>
-                    <EventList {{...this.props}}/>
+                    <EventList {...this.props}/>
                 </Container>
             </div>
         );
