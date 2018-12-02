@@ -1,18 +1,66 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import Event from '../components/Event';
+import {
+    Container,
+    Dropdown,
+    Image,
+    Menu,
+    Visibility,
+} from 'semantic-ui-react'
+
+import EventList from '../components/EventList';
 
 
 class Dashboard extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.menuStyle = {
+            border: 'none',
+            borderRadius: 0,
+            boxShadow: 'none',
+            marginBottom: '1em',
+            transition: 'box-shadow 1.5s ease, padding 1.5s ease'
+        };
+
+        this.fixedMenuStyle = {
+            backgroundColor: '#fff',
+            border: '1px solid #ddd',
+            boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+        };
+
+        this.state = {
+            menuFixed: false
+        };
+    }
+
+    stickTopMenu = () => this.setState({menuFixed: true});
+
+    unStickTopMenu = () => this.setState({menuFixed: false});
+
+
     render() {
 
-        console.log(this.props);
-
         return (
-            <div className="Dashboard">
-                <p> Hello world!</p>
-                <Event {...this.props} />
+            <div>
+                <Visibility onBottomPassed={this.stickTopMenu} onBottomVisible={this.unStickTopMenu} once={false}>
+                    <Menu borderless fixed={this.state.menuFixed ? 'top' : undefined} style={this.state.menuFixed ? this.fixedMenuStyle : this.menuStyle}>
+
+                        <Container text>
+                            <Menu.Item>
+                                <Image size='tiny' src='/logo.png'/>
+                            </Menu.Item>
+                            <Menu.Item header>Events</Menu.Item>
+                            <Menu.Item as='a'>Vehicles</Menu.Item>
+                        </Container>
+
+                    </Menu>
+                </Visibility>
+
+                <Container>
+                    <EventList {{...this.props}}/>
+                </Container>
             </div>
         );
     }

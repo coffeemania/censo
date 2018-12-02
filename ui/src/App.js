@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import './App.css';
-
-// Containers
+import React, {Component} from 'react';
 import RouteContainer from './containers/RouteContainer';
+// import './scss/style.css';
 
 class App extends Component {
-  render() {
-    return (
-      <RouteContainer/>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <RouteContainer/>
+            </div>
+        );
+    }
 }
 
 export default App;
