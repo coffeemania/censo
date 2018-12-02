@@ -1,4 +1,4 @@
-// import op from 'object-path';
+import op from 'object-path';
 import Event from '../models/event';
 
 
@@ -7,9 +7,12 @@ import Event from '../models/event';
  * @param ctx
  */
 export const get = async (ctx) => {
-    // const id = op.get(ctx, 'params.id');
+    const id = op.get(ctx, 'params.id');
 
-    const event = await Event.query();
+    if (!id) throw new Error('Got empty id');
+
+    const event = await Event.query()
+        .where('id', '=', id);
 
     ctx.ok(event);
 };
