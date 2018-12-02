@@ -6,16 +6,17 @@ import reducer from '../reducers';
 
 
 // mock
-const events = [...Array(50).keys()]
-    .map((i) => ({
-        [i]: {
+const events = {};
+[...Array(50).keys()]
+    .forEach((i) => {
+        events[i] = {
             id: i,
             date: new Date(),
             title: `event_${i}`,
             vehicle: `vehicle_${i}`,
             status: 'pending'
         }
-    }));
+    });
 
 const initialState = {
     events

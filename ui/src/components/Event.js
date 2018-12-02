@@ -21,7 +21,12 @@ class Event extends Component {
     render() {
 
         return (
-            <div>{JSON.stringify(this.props)}</div>
+            <tr>
+                <td>{this.props.id}</td>
+                <td>{this.props.title}</td>
+                <td>{this.props.vehicle}</td>
+                <td>{this.props.status}</td>
+            </tr>
         );
     }
 }

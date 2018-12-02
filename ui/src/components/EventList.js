@@ -20,16 +20,28 @@ class EventList extends Component {
 
     render() {
 
-        const Events = Object.entries(this.props.events || {}).map((event) =>
+        const Events = Object.entries(this.props.events || {}).map(([id, event]) =>
             (<Event
-                key={event.id}
-                id={event.id}
+                key={id}
+                id={id}
                 {...event}
             />)
         );
 
         return (
-            <div>{Events}</div>
+            <table className="ui very compact selectable celled table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {Events}
+                </tbody>
+            </table>
         );
     }
 }
