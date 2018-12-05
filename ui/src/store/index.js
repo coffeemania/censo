@@ -2,7 +2,11 @@ import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'remote-redux-devtools';
 import thunk from 'redux-thunk';
 
-import reducer from '../reducers';
+import {routerMiddleware} from 'connected-react-router';
+import {createBrowserHistory} from 'history';
+import createRootReducer from '../reducers';
+
+export const history = createBrowserHistory();
 
 
 // mock
@@ -15,7 +19,7 @@ const events = {};
             title: `event_${i}`,
             vehicle: `vehicle_${i}`,
             status: 'pending'
-        }
+        };
     });
 
 const initialState = {
@@ -25,29 +29,31 @@ const initialState = {
 
 
 function addPromiseThunkSupport(store) {
-  const {dispatch} = store;
+    const {dispatch} = store;
 
-  return action => {
-    if (typeof action.then === 'function') {
-      return action.then(dispatch);
-    }
-    if (typeof action === 'function') {
-      return action(dispatch);
-    }
-    return dispatch(action);
-  };
+    return action => {
+        if (typeof action.then === 'function') {
+            return action.then(dispatch);
+        }
+        if (typeof action === 'function') {
+            return action(dispatch);
+        }
+        return dispatch(action);
+    };
 }
 
 const composeEnhancers = composeWithDevTools({realtime: true});
+// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  reducer,
-  initialState,
-  composeEnhancers(
-    applyMiddleware(
-      thunk
+    createRootReducer(history),
+    initialState,
+    composeEnhancers(
+        applyMiddleware(
+            routerMiddleware(history),
+            thunk
+        )
     )
-  )
 );
 
 store.dispatch = addPromiseThunkSupport(store);

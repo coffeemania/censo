@@ -1,12 +1,20 @@
 import React, {Component} from 'react';
-import RouteContainer from './containers/RouteContainer';
-// import './scss/style.css';
+import {Provider} from 'react-redux';
+import {ConnectedRouter} from 'connected-react-router';
+import store, {history} from './store';
+import routes from './routes';
+import {Route} from 'react-router';
+
 
 class App extends Component {
     render() {
         return (
             <div>
-                <RouteContainer/>
+            <Provider store={store}>
+                <ConnectedRouter history={history}>
+                    {routes.map((route) => <Route {...route}/>)}
+                </ConnectedRouter>
+            </Provider>
             </div>
         );
     }
