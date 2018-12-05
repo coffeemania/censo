@@ -1,11 +1,17 @@
-import Dashboard from '../containers/Dashboard';
+import EventList from '../components/EventList';
+import Event from '../components/Event';
 import connect from '../containers/connector';
 
 
 export default [
     {
-        path: '/',
-        name: 'Home',
-        component: connect(Dashboard)
+        path: '/events',
+        name: 'Events',
+        component: connect(EventList)
+    },
+    {
+        path: '/event/:id',
+        name: 'Event',
+        component: connect(Event)
     }
 ];

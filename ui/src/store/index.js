@@ -49,10 +49,10 @@ const store = createStore(
     createRootReducer(history),
     initialState,
     composeEnhancers(
-        applyMiddleware(
+        applyMiddleware(...[
             routerMiddleware(history),
             thunk
-        )
+        ])
     )
 );
 

@@ -1,34 +1,19 @@
 import React, {Component} from 'react';
-import { Button } from 'semantic-ui-react'
-
+import PropTypes from 'prop-types';
+import Dashboard from '../containers/Dashboard';
 
 class Event extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            collapsed: true
-        };
-
-        this.onToggle = this.onToggle.bind(this);
-    }
-
-    onToggle() {
-        this.setState((prevState /* , props */) => ({collapsed: !prevState.collapsed}));
-    }
-
-
     render() {
-
         return (
-            <tr>
-                <td>{this.props.id}</td>
-                <td>{this.props.title}</td>
-                <td>{this.props.vehicle}</td>
-                <td>{this.props.status}</td>
-            </tr>
+            <Dashboard>
+                <div>This is event # {this.props.match.params.id}</div>
+
+            </Dashboard>
         );
     }
 }
+
+Event.propTypes = {};
 
 export default Event;

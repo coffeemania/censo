@@ -6,17 +6,17 @@ import {
 
 
 function mapStateToProps(state) {
-  return {
-    events: state.events,
-      test: state.test
-  };
+    return {
+        events: state.events,
+        test: state.test
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-      onToggle: (msg) => dispatch(onToggle(msg))
-    // ...
-  };
+    return {
+        onToggle: (msg) => dispatch(onToggle(msg))
+        // ...
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps);

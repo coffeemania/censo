@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Provider} from 'react-redux';
 import {ConnectedRouter} from 'connected-react-router';
+import {Route} from 'react-router';
 import store, {history} from './store';
 import routes from './routes';
-import {Route} from 'react-router';
 
 
 class App extends Component {
