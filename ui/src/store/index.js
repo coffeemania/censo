@@ -6,7 +6,9 @@ import {routerMiddleware} from 'connected-react-router';
 import {createBrowserHistory} from 'history';
 import createRootReducer from '../reducers';
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({
+    basename: '/dashboard/',
+});
 
 
 // mock

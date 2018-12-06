@@ -1,4 +1,5 @@
 import Event from '../models/event';
+import {normalize} from '../lib/utils';
 
 
 /**
@@ -10,6 +11,5 @@ export const get = async (ctx) => {
     const event = await Event.query()
         .eager('vehicle');
 
-    ctx.ok(event);
+    ctx.ok(normalize(event));
 };
-
