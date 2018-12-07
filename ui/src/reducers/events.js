@@ -4,6 +4,16 @@ export default (state = 'EVENTS', action = {}) => {
 
         case 'events':
 
+            console.log('events');
+
+            return {
+                ...state,
+            };
+
+        case 'event':
+
+            console.log('event');
+
             return {
                 ...state,
             };

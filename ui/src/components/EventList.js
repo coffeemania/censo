@@ -6,17 +6,27 @@ import Dashboard from '../containers/Dashboard';
 
 class EventList extends Component {
 
+
+    // constructor(props, context) {
+    //     super(props, context);
+    //
+        // this.onPickEvent = this.onPickEvent.bind(this);
+    // }
+
+    // onPickEvent(dispatch, id) {
+    //     dispatch({type: 'USER', payload: {id}});
+    // }
+
     render() {
 
-        const eventArray = Object.entries(this.props.events || {}).map(([id, event]) =>
-            (<tr key={id}>
+        const eventArray = Object.entries(this.props.events || {}).map(([id, event]) => (
+            <tr key={id} onClick={this.onPickEvent}>
                 <td>{id}</td>
                 <td>{event.title}</td>
                 <td>{event.vehicle}</td>
                 <td>{event.status}</td>
             </tr>
-            )
-        );
+        ));
 
         return (
             <Dashboard>
@@ -30,7 +40,7 @@ class EventList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {eventArray}
+                    {eventArray}
                     </tbody>
                 </table>
             </Dashboard>
@@ -51,4 +61,8 @@ EventList.propTypes = {
 
 const mapStateToProps = ({events}) => ({events});
 
-export default connect(mapStateToProps)(EventList);
+const mapDispatchToProps = (dispatch) => ({
+    onPickEvent: (id) => dispatch({type: 'Event', payload: {id}})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventList);
