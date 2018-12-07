@@ -1,29 +1,15 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Event from './Event';
+import {connect} from 'react-redux';
 import Dashboard from '../containers/Dashboard';
 
 
 class EventList extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            collapsed: true
-        };
-
-        this.onToggle = this.onToggle.bind(this);
-    }
-
-    onToggle() {
-        this.setState((prevState /* , props */) => ({collapsed: !prevState.collapsed}));
-    }
-
-
     render() {
 
-        const Events = Object.entries(this.props.events || {}).map(([id, event]) =>
-            (<tr>
+        const eventArray = Object.entries(this.props.events || {}).map(([id, event]) =>
+            (<tr key={id}>
                 <td>{id}</td>
                 <td>{event.title}</td>
                 <td>{event.vehicle}</td>
@@ -44,7 +30,7 @@ class EventList extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {Events}
+                        {eventArray}
                     </tbody>
                 </table>
             </Dashboard>
@@ -53,9 +39,16 @@ class EventList extends Component {
 }
 
 EventList.propTypes = {
-    events: PropTypes.objectOf({
-
-    }).isRequired
+    events: PropTypes.objectOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        date: PropTypes.instanceOf(Date).isRequired,
+        title: PropTypes.string.isRequired,
+        vehicle: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired
+    })).isRequired
 };
 
-export default EventList;
+
+const mapStateToProps = ({events}) => ({events});
+
+export default connect(mapStateToProps)(EventList);

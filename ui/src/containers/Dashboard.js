@@ -50,7 +50,7 @@ class Dashboard extends Component {
                             <Menu.Item>
                                 <Image size='tiny' src='/logo.png'/>
                             </Menu.Item>
-                            <Menu.Item xheader>Events</Menu.Item>
+                            <Menu.Item xheader='true'>Events</Menu.Item>
                             <Menu.Item as='a'>Vehicles</Menu.Item>
                         </Container>
 

@@ -1,17 +1,11 @@
-
-export default function (state = {}, action) {
+export default (state = 'EVENTS', action = {}) => {
 
     switch (action.type) {
 
-        case 'GOT_DATA':
-
-            // action.data
-
-            // console.log(action.data);
+        case 'events':
 
             return {
                 ...state,
-                test: action.data.msg
             };
 
         // ...
@@ -20,5 +14,4 @@ export default function (state = {}, action) {
         default:
             return state;
     }
-
 };
