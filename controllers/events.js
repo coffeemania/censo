@@ -9,6 +9,9 @@ import {normalize} from '../lib/utils';
 export const get = async (ctx) => {
 
     const event = await Event.query()
+
+        .limit(10)  // REMOVEME
+
         .eager('vehicle');
 
     ctx.ok(normalize(event));

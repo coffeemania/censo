@@ -9,20 +9,20 @@ import reducers from '../reducers';
 
 
 // mock
-const events = {};
-[...Array(10).keys()]
-    .forEach((i) => {
-        events[i] = {
-            id: i,
-            date: new Date(),
-            title: `event_${i}`,
-            vehicle: `vehicle_${i}`,
-            status: 'pending'
-        };
-    });
+// const events = {};
+// [...Array(10).keys()]
+//     .forEach((i) => {
+//         events[i] = {
+//             id: i,
+//             date: new Date(),
+//             title: `event_${i}`,
+//             vehicle: `vehicle_${i}`,
+//             status: 'pending'
+//         };
+//     });
 
 const initialState = {
-    events
+    events: {}
     // ...
 };
 

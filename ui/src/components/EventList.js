@@ -6,14 +6,20 @@ import Dashboard from '../containers/Dashboard';
 
 class EventList extends Component {
 
+    componentDidMount() {
+        this.props.getEvents();
+    }
+
     render() {
 
         const eventArray = Object.entries(this.props.events || {}).map(([id, event]) => (
             <tr key={id} onClick={this.props.onPickEvent.bind(null, id)}>
                 <td>{id}</td>
-                <td>{event.title}</td>
-                <td>{event.vehicle}</td>
+                <td>{event.datetime}</td>
+                <td>{event.location}</td>
+                <td>{JSON.stringify(event.vehicle)}</td>
                 <td>{event.status}</td>
+                <td>{event.foreignId}</td>
             </tr>
         ));
 
@@ -23,13 +29,15 @@ class EventList extends Component {
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Title</th>
+                        <th>datetime</th>
+                        <th>location</th>
                         <th>Vehicle</th>
                         <th>Status</th>
+                        <th>foreignId</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {eventArray}
+                        {eventArray}
                     </tbody>
                 </table>
             </Dashboard>
@@ -40,18 +48,21 @@ class EventList extends Component {
 EventList.propTypes = {
     events: PropTypes.objectOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
-        date: PropTypes.instanceOf(Date).isRequired,
-        title: PropTypes.string.isRequired,
-        vehicle: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired
+        datetime: PropTypes.string.isRequired,
+        location: PropTypes.string.isRequired,
+        vehicle: PropTypes.object.isRequired,
+        status: PropTypes.string.isRequired,
+        foreignId: PropTypes.string.isRequired
     })).isRequired,
-    onPickEvent: PropTypes.func.isRequired
+    onPickEvent: PropTypes.func.isRequired,
+    getEvents: PropTypes.func.isRequired
 };
 
 
 const mapStateToProps = ({events}) => ({events});
 
 const mapDispatchToProps = (dispatch) => ({
+    getEvents: () => dispatch({type: 'EVENTS'}),
     onPickEvent: (id) => dispatch({type: 'EVENT', id})
 });
 
