@@ -9,7 +9,7 @@ class EventList extends Component {
     render() {
 
         const eventArray = Object.entries(this.props.events || {}).map(([id, event]) => (
-            <tr key={id} onClick={this.onPickEvent}>
+            <tr key={id} onClick={this.props.onPickEvent.bind(null, id)}>
                 <td>{id}</td>
                 <td>{event.title}</td>
                 <td>{event.vehicle}</td>
@@ -51,7 +51,7 @@ EventList.propTypes = {
 const mapStateToProps = ({events}) => ({events});
 
 const mapDispatchToProps = (dispatch) => ({
-    onPickEvent: (id) => dispatch({type: 'Event', payload: {id}})
+    onPickEvent: (id) => dispatch({type: 'EVENT', payload: {id}})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventList);

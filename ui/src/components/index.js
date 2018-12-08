@@ -1,7 +1,10 @@
+import React from 'react';
+import {NOT_FOUND} from 'redux-first-router';
 import Event from './Event';
-import Events from './EventList';
+import EventList from './EventList';
 
 export default {
-    Event,
-    Events
+    EVENT: Event,
+    EVENTS: EventList,
+    [NOT_FOUND]: () => (<div>404</div>)
 };

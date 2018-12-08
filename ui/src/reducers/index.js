@@ -1,7 +1,7 @@
-import page from './page';
+import location from './location';
 import events from './events';
 
 export default {
-    page,
+    location,
     events
 };

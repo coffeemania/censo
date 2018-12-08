@@ -39,8 +39,8 @@ export default function configureStore() {
     const {reducer, middleware, enhancer, thunk} = connectRoutes(routesMap);
 
     const rootReducer = combineReducers({
-        ...reducers,
-        location: reducer
+        ...reducers
+        // location: reducer
     });
     const middlewares = applyMiddleware(middleware);
 

@@ -5,21 +5,18 @@ import PropTypes from 'prop-types';
 import components from './components';
 
 
-const App = ({page}) => {
-    const Comp = components[page];
+const App = ({type}) => {
+    const Comp = components[type];
     return <Comp/>;
 };
 
 
-const mapStateToProps = ({page}) => ({page});
-// const mapStateToProps = (x) => {
-//     console.log(x);
-// };
+const mapStateToProps = ({location}) => ({type: location.type});
 
 export default connect(mapStateToProps)(App);
 
 App.propTypes = {
-    page: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired
 };
 
 

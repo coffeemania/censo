@@ -1,10 +1,12 @@
 export default (state = 'EVENTS', action = {}) => {
 
+    // console.log(action.type);
+
     switch (action.type) {
 
-        case 'events':
+        case 'EVENTS':
 
-            console.log('events');
+            console.log('EVENTS!');
 
             return {
                 ...state,
