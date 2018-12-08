@@ -18,12 +18,7 @@ Event.propTypes = {
     event: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({location, events}) => {
-    const eventId = location.payload.id;
-    return {
-        event: events[eventId]
-    }
-};
+const mapStateToProps = ({event}) => ({event});
 
 export default connect(mapStateToProps)(Event);
 

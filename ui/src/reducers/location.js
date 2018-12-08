@@ -4,13 +4,13 @@ import routesMap from '../routes';
 
 const initialState = {
     pathname: '/events',
-    type: 'EVENTS',
+    type: 'EVENTS_PAGE',
     // payload: {param: 'id'},
-    prev: {
-        pathname: '',
-        type: '',
-        payload: {}
-    },
+    // prev: {
+    //     pathname: '',
+    //     type: '',
+    //     payload: {}
+    // },
     kind: undefined,
     // hasSSR: isServer() ? true : undefined,
     routesMap: {
@@ -18,23 +18,23 @@ const initialState = {
     }
 };
 
-export default (state = initialState, action = {}) => ({...state});
+export default (state = initialState, action = {}) => {
 
-    // console.info(`location :: ${action.type}`);
+    console.info(`location :: ${action.type}`);
 
-    // if (routesMap[action.type]) {
-    //     return {
-    //         pathname: action.meta.location.current.pathname,
-    //         type: action.type,
-    //         payload: {...action.payload},
-    //         prev: action.meta.location.prev,
-    //         kind: action.meta.location.kind,
-    //         hasSSR: state.hasSSR,
-    //         routesMap
-    //     };
-    // }
+    if (routesMap[action.type]) {
+        return {
+            pathname: action.meta.location.current.pathname,
+            type: action.type,
+            payload: {...action.payload},
+            prev: action.meta.location.prev,
+            kind: action.meta.location.kind,
+            hasSSR: state.hasSSR,
+            routesMap
+        };
+    }
 
     // store.dispatch({type: 'EVENTS'});
 
-    // return {...state};
-// }
+    return {...state};
+};

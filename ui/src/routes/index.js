@@ -1,4 +1,4 @@
 export default {
-    // EVENT: '/event/:id',
-    // EVENTS: '/events'
+    EVENT_PAGE: '/event/:id',
+    EVENTS_PAGE: '/events'
 };
