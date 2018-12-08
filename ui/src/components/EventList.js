@@ -44,7 +44,8 @@ EventList.propTypes = {
         title: PropTypes.string.isRequired,
         vehicle: PropTypes.string.isRequired,
         status: PropTypes.string.isRequired
-    })).isRequired
+    })).isRequired,
+    onPickEvent: PropTypes.func.isRequired
 };
 
 

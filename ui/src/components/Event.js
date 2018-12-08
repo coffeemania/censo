@@ -8,20 +8,22 @@ class Event extends Component {
     render() {
         return (
             <Dashboard>
-                <div>This is event # {this.props.eventId}</div>
-
+                <div>{JSON.stringify(this.props.event)}</div>
             </Dashboard>
         );
     }
 }
 
 Event.propTypes = {
-    eventId: PropTypes.string.isRequired
+    event: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({location}) => ({
-    eventId: location.payload.id
-});
+const mapStateToProps = ({location, events}) => {
+    const eventId = location.payload.id;
+    return {
+        event: events[eventId]
+    }
+};
 
 export default connect(mapStateToProps)(Event);
 

@@ -7,6 +7,7 @@ import {
     Menu,
     Visibility
 } from 'semantic-ui-react';
+import connect from 'react-redux/es/connect/connect';
 
 
 class Dashboard extends Component {
@@ -50,7 +51,7 @@ class Dashboard extends Component {
                             <Menu.Item>
                                 <Image size='tiny' src='/logo.png'/>
                             </Menu.Item>
-                            <Menu.Item xheader='true'>Events</Menu.Item>
+                            <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events</Menu.Item>
                             <Menu.Item as='a'>Vehicles</Menu.Item>
                         </Container>
 
@@ -67,8 +68,13 @@ class Dashboard extends Component {
 
 
 Dashboard.propTypes = {
-    children: PropTypes.element.isRequired
+    children: PropTypes.element.isRequired,
+    onClickEvents: PropTypes.func.isRequired
 };
 
 
-export default Dashboard;
+const mapDispatchToProps = (dispatch) => ({
+    onClickEvents: () => dispatch({type: 'EVENTS'})
+});
+
+export default connect(undefined, mapDispatchToProps)(Dashboard);
