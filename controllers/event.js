@@ -14,6 +14,6 @@ export const get = async (ctx) => {
     const event = await Event.query()
         .where('id', '=', id);
 
-    ctx.ok(event);
+    ctx.ok(event.shift());
 };
 

@@ -52,7 +52,7 @@ EventList.propTypes = {
 const mapStateToProps = ({events}) => ({events});
 
 const mapDispatchToProps = (dispatch) => ({
-    onPickEvent: (id) => dispatch({type: 'EVENT', payload: {id}})
+    onPickEvent: (id) => dispatch({type: 'EVENT', id})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventList);

@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
-import configureStore from './store';
+import store from './store';
 import App from './App';
 
-const {store} = configureStore();
 
 ReactDOM.render(
     <Provider store={store}>

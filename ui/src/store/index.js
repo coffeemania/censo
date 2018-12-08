@@ -1,24 +1,16 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {connectRoutes} from 'redux-first-router';
-// import {composeWithDevTools} from 'remote-redux-devtools';
-// import thunk from 'redux-thunk';
-
+import createHistory from 'history/createBrowserHistory';
+import createSagaMiddleware from 'redux-saga';
+import createSagaMonitor from '@clarketm/saga-monitor';
+import rootSaga from '../sagas';
 import routesMap from '../routes';
-
 import reducers from '../reducers';
-
-// import {routerMiddleware} from 'connected-react-router';
-// import {createBrowserHistory} from 'history';
-// import createRootReducer from '../reducers';
-
-// export const history = createBrowserHistory({
-//     basename: '/dashboard/'
-// });
 
 
 // mock
 const events = {};
-[...Array(50).keys()]
+[...Array(10).keys()]
     .forEach((i) => {
         events[i] = {
             id: i,
@@ -35,53 +27,27 @@ const initialState = {
 };
 
 
-export default function configureStore() {
-    const {reducer, middleware, enhancer, thunk} = connectRoutes(routesMap);
+const {middleware, enhancer, initialDispatch} = connectRoutes(createHistory(), routesMap, {initialDispatch: false});
 
-    const rootReducer = combineReducers({
-        ...reducers
-        // location: reducer
-    });
-    const middlewares = applyMiddleware(middleware);
-
-    /* eslint no-underscore-dangle: 0 */
-    const composeEnhancers = typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose);
-    const enhancers = composeEnhancers(enhancer, middlewares);
-
-    const store = createStore(rootReducer, initialState, enhancers);
-
-    return {store, thunk};
-}
+const rootReducer = combineReducers({...reducers});
+const sagaMiddleware = createSagaMiddleware({
+    sagaMonitor: createSagaMonitor({
+        level: 'log',
+        effectTrigger: true,
+        effectResolve: true,
+        actionDispatch: true
+    })
+});
+const middlewares = applyMiddleware(middleware, sagaMiddleware);
 
 
-// function addPromiseThunkSupport(store) {
-//     const {dispatch} = store;
-//
-//     return action => {
-//         if (typeof action.then === 'function') {
-//             return action.then(dispatch);
-//         }
-//         if (typeof action === 'function') {
-//             return action(dispatch);
-//         }
-//         return dispatch(action);
-//     };
-// }
+/* eslint no-underscore-dangle: 0 */
+const composeEnhancers = typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose);
+const enhancers = composeEnhancers(enhancer, middlewares);
 
-// const composeEnhancers = composeWithDevTools({realtime: true});
-// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-//
-// const store = createStore(
-//     createRootReducer(history),
-//     initialState,
-//     composeEnhancers(
-//         applyMiddleware(...[
-//             routerMiddleware(history),
-//             thunk
-//         ])
-//     )
-// );
+const store = createStore(rootReducer, initialState, enhancers);
 
-// store.dispatch = addPromiseThunkSupport(store);
+sagaMiddleware.run(rootSaga);
+// initialDispatch();
 
-// export default store;
+export default store;

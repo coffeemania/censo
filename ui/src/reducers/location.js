@@ -1,11 +1,11 @@
-import configureStore from '../store';
+// import store from '../store';
 import routesMap from '../routes';
 
 
 const initialState = {
     pathname: '/events',
     type: 'EVENTS',
-    payload: {param: 'url'},
+    // payload: {param: 'id'},
     prev: {
         pathname: '',
         type: '',
@@ -18,23 +18,23 @@ const initialState = {
     }
 };
 
-export default (state = initialState, action = {}) => {
+export default (state = initialState, action = {}) => ({...state});
 
-    console.info(`location :: ${action.type}`);
+    // console.info(`location :: ${action.type}`);
 
-    if (routesMap[action.type]) {
-        return {
-            pathname: action.meta.location.current.pathname,
-            type: action.type,
-            payload: {...action.payload},
-            prev: action.meta.location.prev,
-            kind: action.meta.location.kind,
-            hasSSR: state.hasSSR,
-            routesMap
-        };
-    }
+    // if (routesMap[action.type]) {
+    //     return {
+    //         pathname: action.meta.location.current.pathname,
+    //         type: action.type,
+    //         payload: {...action.payload},
+    //         prev: action.meta.location.prev,
+    //         kind: action.meta.location.kind,
+    //         hasSSR: state.hasSSR,
+    //         routesMap
+    //     };
+    // }
 
-    // configureStore().store.dispatch({type: 'EVENTS'});
+    // store.dispatch({type: 'EVENTS'});
 
-    return state;
-}
+    // return {...state};
+// }

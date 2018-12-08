@@ -1,29 +1,30 @@
 export default (state = 'EVENTS', action = {}) => {
 
-    // console.log(action.type);
-
     switch (action.type) {
 
-        case 'EVENTS':
+        case 'GET_EVENT_SUCCESS':
 
-            console.log('EVENTS!');
-
-            return {
-                ...state,
-            };
-
-        case 'event':
-
-            console.log('event');
+            // console.dir(action);
 
             return {
                 ...state,
+                event: action.event
             };
+
+        // case 'EVENT':
+        //
+        //     console.log('EVENT!');
+        //
+        //     // dispatch()
+        //
+        //     return {
+        //         ...state,
+        //     };
 
         // ...
 
 
         default:
-            return state;
+            return {...state};
     }
 };
