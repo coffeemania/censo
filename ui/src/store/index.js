@@ -43,7 +43,10 @@ export default function configureStore() {
         location: reducer
     });
     const middlewares = applyMiddleware(middleware);
-    const enhancers = compose(enhancer, middlewares);
+
+    /* eslint no-underscore-dangle: 0 */
+    const composeEnhancers = typeof window === 'object' && (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose);
+    const enhancers = composeEnhancers(enhancer, middlewares);
 
     const store = createStore(rootReducer, initialState, enhancers);
 

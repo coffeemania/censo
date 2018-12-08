@@ -6,17 +6,6 @@ import Dashboard from '../containers/Dashboard';
 
 class EventList extends Component {
 
-
-    // constructor(props, context) {
-    //     super(props, context);
-    //
-        // this.onPickEvent = this.onPickEvent.bind(this);
-    // }
-
-    // onPickEvent(dispatch, id) {
-    //     dispatch({type: 'USER', payload: {id}});
-    // }
-
     render() {
 
         const eventArray = Object.entries(this.props.events || {}).map(([id, event]) => (
