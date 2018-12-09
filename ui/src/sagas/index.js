@@ -1,7 +1,11 @@
-import {all, call, put, fork, select, take, takeLatest} from 'redux-saga/effects';
+import {all, call, put, fork, select, take} from 'redux-saga/effects';
 import Backend from '../services/backend';
 import {getEvent, getEvents} from '../reducers/selectors'
 
+
+/**
+ * Fetchers
+ */
 
 function* fetchEvent(id) {
     try {
@@ -29,7 +33,7 @@ function* fetchEvents() {
 // Loads an event unless it's cached
 function* loadEvent(id) {
     const cached = yield select(getEvent, id);
-    if (Object.keys(cached).length === 0) yield call(fetchEvent, id);
+    if (!cached) yield call(fetchEvent, id);
 }
 
 

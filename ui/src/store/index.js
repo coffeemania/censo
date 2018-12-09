@@ -11,7 +11,8 @@ import reducers from '../reducers';
 
 const initialState = {
     events: {},
-    event: {}
+    eventDetails: {},
+    event: {}   // removeme
     // ...
 };
 
