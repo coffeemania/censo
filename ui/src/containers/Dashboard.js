@@ -51,8 +51,8 @@ class Dashboard extends Component {
                             <Menu.Item>
                                 <Image size='tiny' src='/logo.png'/>
                             </Menu.Item>
-                            <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events</Menu.Item>
-                            <Menu.Item as='a'>Vehicles</Menu.Item>
+                            <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events ({this.props.eventCount})</Menu.Item>
+                            <Menu.Item as='a' onClick={this.props.onClickVehicles}>Vehicles ({this.props.vehicleCount})</Menu.Item>
                         </Container>
 
                     </Menu>
@@ -68,13 +68,27 @@ class Dashboard extends Component {
 
 
 Dashboard.propTypes = {
+    eventCount: PropTypes.number,
+    vehicleCount: PropTypes.number,
     children: PropTypes.element.isRequired,
-    onClickEvents: PropTypes.func.isRequired
+    onClickEvents: PropTypes.func.isRequired,
+    onClickVehicles: PropTypes.func.isRequired
+};
+
+Dashboard.defaultProps = {
+    eventCount: 0,
+    vehicleCount: 0
 };
 
 
-const mapDispatchToProps = (dispatch) => ({
-    onClickEvents: () => dispatch({type: 'EVENTS'})
+const mapStateToProps = ({events, vehicles}) => ({
+    eventCount: Object.keys(events).length,
+    vehicleCount: Object.keys(vehicles).length
 });
 
-export default connect(undefined, mapDispatchToProps)(Dashboard);
+const mapDispatchToProps = (dispatch) => ({
+    onClickEvents: () => dispatch({type: 'EVENTS'}),
+    onClickVehicles: () => dispatch({type: 'VEHICLES'})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

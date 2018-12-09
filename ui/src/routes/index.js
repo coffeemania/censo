@@ -1,4 +1,5 @@
 export default {
     EVENT: '/event/:id',
-    EVENTS: '/events'
+    EVENTS: '/events',
+    VEHICLES: '/vehicles'
 };

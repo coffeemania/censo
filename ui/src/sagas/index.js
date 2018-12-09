@@ -1,6 +1,6 @@
 import {all, call, put, fork, select, take} from 'redux-saga/effects';
 import Backend from '../services/backend';
-import {getEvent, getEvents} from '../reducers/selectors'
+import {getEvent, getEvents, getVehicles} from '../reducers/selectors'
 
 
 /**
@@ -25,6 +25,15 @@ function* fetchEvents() {
     }
 }
 
+function* fetchVehicles() {
+    try {
+        const vehicles = yield call(() => Backend.get('/vehicles'));
+        yield put({type: 'GET_VEHICLES_SUCCESS', vehicles: vehicles.data});
+    } catch (e) {
+        yield put({type: 'GET_VEHICLES_FAILED', message: e.message});
+    }
+}
+
 
 /**
  * Cache
@@ -41,6 +50,12 @@ function* loadEvent(id) {
 function* loadEvents() {
     const cached = yield select(getEvents);
     if (Object.keys(cached).length === 0) yield call(fetchEvents);
+}
+
+// Loads the fetchVehicles unless they're cached
+function* loadVehicles() {
+    const cached = yield select(getVehicles);
+    if (Object.keys(cached).length === 0) yield call(fetchVehicles);
 }
 
 
@@ -64,6 +79,14 @@ function* watchLoadEventsPage() {
     }
 }
 
+// Fetches data for the Vehicles
+function* watchLoadVehiclesPage() {
+    while (true) {
+        yield take('VEHICLES');
+        yield fork(loadVehicles);
+    }
+}
+
 
 /**
  * Root
@@ -72,6 +95,7 @@ export default function* rootSaga() {
 
     yield all([
         fork(watchLoadEventPage),
-        fork(watchLoadEventsPage)
+        fork(watchLoadEventsPage),
+        fork(watchLoadVehiclesPage)
     ]);
 };

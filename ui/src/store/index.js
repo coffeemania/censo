@@ -1,6 +1,5 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {connectRoutes} from 'redux-first-router';
-// import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 import createSagaMonitor from '@clarketm/saga-monitor';
 import queryString from 'query-string';
@@ -12,12 +11,13 @@ import reducers from '../reducers';
 const initialState = {
     events: {},
     eventDetails: {},
-    event: {}   // removeme
+    event: {},   // removeme
+    vehicles: {}
     // ...
 };
 
 
-const {middleware, enhancer, initialDispatch} = connectRoutes(/*createHistory(),*/ routesMap, {
+const {middleware, enhancer, initialDispatch} = connectRoutes(routesMap, {
     notFoundPath: '/404',
     initialDispatch: false,
     querySerializer: queryString

@@ -1,4 +1,5 @@
 import Vehicle from '../models/vehicle';
+import {normalize} from '../lib/utils';
 
 
 /**
@@ -9,6 +10,6 @@ export const get = async (ctx) => {
 
     const event = await Vehicle.query();
 
-    ctx.ok(event);
+    ctx.ok(normalize(event));
 };
 
