@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Event from '../models/event';
 import {normalize} from '../lib/utils';
 
@@ -8,11 +9,18 @@ import {normalize} from '../lib/utils';
  */
 export const get = async (ctx) => {
 
-    const event = await Event.query()
+    const events = await Event.query()
 
         .limit(10)  // REMOVEME
 
-        .eager('vehicle');
+        .eager('vehicle')
 
-    ctx.ok(normalize(event));
+        .map((event) => ({
+            ...event,
+            datetime: moment(event.datetime).format('DD.MM.YYYY HH:mm'),
+            statusCheckUrl: process.env.STATUS_CHECK_URL ? `${process.env.STATUS_CHECK_URL}${event.foreignId}` : event.foreignId
+        }));
+
+
+    ctx.ok(normalize(events));
 };

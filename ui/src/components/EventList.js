@@ -10,28 +10,20 @@ class EventList extends Component {
 
         const eventArray = Object.entries(this.props.events || {}).map(([id, event]) => (
             <tr key={id} onClick={this.props.onPickEvent.bind(null, id)}>
-                <td>{id}</td>
+                <td className=''>{id}</td>
+                <td>
+                    <button className='ui mini button green' type='button'>{event.status}</button>
+                </td>
                 <td>{event.datetime}</td>
                 <td>{event.location}</td>
-                <td>{JSON.stringify(event.vehicle)}</td>
-                <td>{event.status}</td>
-                <td>{event.foreignId}</td>
+                <td>{event.vehicle.model} [{event.vehicle.plate}]</td>
+                <td><a href={event.statusCheckUrl} rel='noopener noreferrer' target='_blank'>Check</a></td>
             </tr>
         ));
 
         return (
             <Dashboard>
-                <table className="ui very compact selectable celled table">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>datetime</th>
-                        <th>location</th>
-                        <th>Vehicle</th>
-                        <th>Status</th>
-                        <th>foreignId</th>
-                    </tr>
-                    </thead>
+                <table className="ui very basic selectable stackable table">
                     <tbody>
                         {eventArray}
                     </tbody>
