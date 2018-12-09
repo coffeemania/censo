@@ -1,8 +1,8 @@
-export default (state = 'EVENTS', action = {}) => {
+export default (state = 'EVENT', action = {}) => {
 
     switch (action.type) {
 
-        // case 'EVENT_PAGE':
+        // case 'EVENT':
         //
         //     return {
         //         ...state

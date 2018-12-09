@@ -4,7 +4,7 @@ import Event from './Event';
 import EventList from './EventList';
 
 export default {
-    EVENT_PAGE: Event,
-    EVENTS_PAGE: EventList,
+    EVENT: Event,
+    EVENTS: EventList,
     [NOT_FOUND]: () => (<div>404</div>)
 };

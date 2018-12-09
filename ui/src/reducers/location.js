@@ -3,7 +3,7 @@ import routesMap from '../routes';
 
 const initialState = {
     pathname: '/events',
-    type: 'EVENTS_PAGE',
+    type: 'EVENTS',
     payload: {},
     prev: {
         pathname: '',
@@ -21,7 +21,7 @@ export default (state = initialState, action = {}) => {
 
     if (!routesMap[action.type]) return {...state};
 
-    return {
+    const result = {
         pathname: action.meta.location.current.pathname,
         type: action.type,
         payload: {...action.payload},
@@ -30,4 +30,8 @@ export default (state = initialState, action = {}) => {
         hasSSR: state.hasSSR,
         routesMap
     };
+
+    console.dir(result);
+
+    return result;
 };

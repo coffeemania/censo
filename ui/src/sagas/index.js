@@ -28,15 +28,15 @@ function* fetchEvents() {
 
 // Loads an event unless it's cached
 function* loadEvent(id) {
-    const repo = yield select(getEvent, id);
-    if (!repo) yield call(fetchEvent, id);
+    const cached = yield select(getEvent, id);
+    if (Object.keys(cached).length === 0) yield call(fetchEvent, id);
 }
 
 
 // Loads the events unless they're cached
 function* loadEvents() {
-    const repo = yield select(getEvents);
-    if (Object.keys(repo).length === 0) yield call(fetchEvents);
+    const cached = yield select(getEvents);
+    if (Object.keys(cached).length === 0) yield call(fetchEvents);
 }
 
 
@@ -47,7 +47,7 @@ function* loadEvents() {
 // Fetches data for an Event
 function* watchLoadEventPage() {
     while (true) {
-        const {payload} = yield take('EVENT_PAGE');
+        const {payload} = yield take('EVENT');
         yield fork(loadEvent, payload.id);
     }
 }
@@ -55,7 +55,7 @@ function* watchLoadEventPage() {
 // Fetches data for the Events
 function* watchLoadEventsPage() {
     while (true) {
-        yield take('EVENTS_PAGE');
+        yield take('EVENTS');
         yield fork(loadEvents);
     }
 }
