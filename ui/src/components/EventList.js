@@ -7,7 +7,7 @@ import Dashboard from '../containers/Dashboard';
 class EventList extends Component {
 
     componentDidMount() {
-        this.props.getEvents();
+        // this.props.getEvents();
     }
 
     render() {
@@ -54,15 +54,15 @@ EventList.propTypes = {
         status: PropTypes.string.isRequired,
         foreignId: PropTypes.string.isRequired
     })).isRequired,
-    onPickEvent: PropTypes.func.isRequired,
-    getEvents: PropTypes.func.isRequired
+    onPickEvent: PropTypes.func.isRequired
+    // getEvents: PropTypes.func.isRequired
 };
 
 
 const mapStateToProps = ({events}) => ({events});
 
 const mapDispatchToProps = (dispatch) => ({
-    getEvents: () => dispatch({type: 'EVENTS'}),
+    // getEvents: () => dispatch({type: 'EVENTS'}),
     onPickEvent: (id) => dispatch({type: 'EVENT', id})
 });
 

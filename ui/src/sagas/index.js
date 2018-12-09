@@ -1,6 +1,6 @@
 import {all, call, put, fork, select, take, takeLatest} from 'redux-saga/effects';
 import Backend from '../services/backend';
-import {getEvent} from '../reducers/selectors'
+import {getEvent, getEvents} from '../reducers/selectors'
 
 
 function* fetchEvent(id) {
@@ -22,21 +22,21 @@ function* fetchEvents() {
 }
 
 
-function* eventsPage(action) {
-    yield fetchEvents(action);
-    yield put({type: 'EVENTS_PAGE'});
-}
-
-function* eventPage(action) {
-    yield fetchEvent(action.id);
-    yield put({type: 'EVENT_PAGE', payload: {id: action.id}});
-}
-
+/**
+ * Cache
+ */
 
 // Loads an event unless it's cached
 function* loadEvent(id) {
     const repo = yield select(getEvent, id);
     if (!repo) yield call(fetchEvent, id);
+}
+
+
+// Loads the events unless they're cached
+function* loadEvents() {
+    const repo = yield select(getEvents);
+    if (Object.keys(repo).length === 0) yield call(fetchEvents);
 }
 
 
@@ -52,6 +52,14 @@ function* watchLoadEventPage() {
     }
 }
 
+// Fetches data for the Events
+function* watchLoadEventsPage() {
+    while (true) {
+        yield take('EVENTS_PAGE');
+        yield fork(loadEvents);
+    }
+}
+
 
 /**
  * Root
@@ -59,8 +67,7 @@ function* watchLoadEventPage() {
 export default function* rootSaga() {
 
     yield all([
-        takeLatest('EVENTS', eventsPage),
-        takeLatest('EVENT', eventPage),
-        fork(watchLoadEventPage)
+        fork(watchLoadEventPage),
+        fork(watchLoadEventsPage)
     ]);
 };
