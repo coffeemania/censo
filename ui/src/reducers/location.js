@@ -4,7 +4,7 @@ import routesMap from '../routes';
 
 const initialState = {
     pathname: '/events',
-    type: 'EVENTS_PAGE',
+    // type: 'EVENTS_PAGE',
     // payload: {param: 'id'},
     // prev: {
     //     pathname: '',
@@ -20,9 +20,11 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
 
-    console.info(`location :: ${action.type}`);
+    console.log(`location reducer:`);
+    console.dir(action);
 
     if (routesMap[action.type]) {
+
         return {
             pathname: action.meta.location.current.pathname,
             type: action.type,
@@ -33,8 +35,6 @@ export default (state = initialState, action = {}) => {
             routesMap
         };
     }
-
-    // store.dispatch({type: 'EVENTS'});
 
     return {...state};
 };

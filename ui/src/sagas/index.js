@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import Backend from '../lib/backend';
+import Backend from '../services/backend';
 
 
 function* getEvent(action) {
@@ -24,6 +24,7 @@ function* getEvents() {
 
 function* eventPage(action) {
     yield getEvent(action);
+    // yield put({type: 'EVENTS_PAGE'});
 }
 
 

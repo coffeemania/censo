@@ -6,8 +6,8 @@ import components from './components';
 
 
 const App = ({type}) => {
-    const Comp = components[type];
-    return <Comp/>;
+    const Container = components[type] ? components[type] : components.NOT_FOUND;
+    return <Container/>;
 };
 
 
