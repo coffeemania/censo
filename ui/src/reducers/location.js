@@ -1,16 +1,15 @@
-// import store from '../store';
 import routesMap from '../routes';
 
 
 const initialState = {
     pathname: '/events',
-    // type: 'EVENTS_PAGE',
-    // payload: {param: 'id'},
-    // prev: {
-    //     pathname: '',
-    //     type: '',
-    //     payload: {}
-    // },
+    type: 'EVENTS_PAGE',
+    payload: {},
+    prev: {
+        pathname: '',
+        type: '',
+        payload: {}
+    },
     kind: undefined,
     // hasSSR: isServer() ? true : undefined,
     routesMap: {
@@ -20,21 +19,15 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
 
-    console.log(`location reducer:`);
-    console.dir(action);
+    if (!routesMap[action.type]) return {...state};
 
-    if (routesMap[action.type]) {
-
-        return {
-            pathname: action.meta.location.current.pathname,
-            type: action.type,
-            payload: {...action.payload},
-            prev: action.meta.location.prev,
-            kind: action.meta.location.kind,
-            hasSSR: state.hasSSR,
-            routesMap
-        };
-    }
-
-    return {...state};
+    return {
+        pathname: action.meta.location.current.pathname,
+        type: action.type,
+        payload: {...action.payload},
+        prev: action.meta.location.prev,
+        kind: action.meta.location.kind,
+        hasSSR: state.hasSSR,
+        routesMap
+    };
 };

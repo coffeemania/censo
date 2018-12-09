@@ -4,7 +4,6 @@ import Backend from '../services/backend';
 
 function* getEvent(action) {
     try {
-        // console.log(action);
         const event = yield call(() => Backend.get(`/event/${action.id}`));
         yield put({type: 'GET_EVENT_SUCCESS', event: event.data});
     } catch (e) {
@@ -22,13 +21,18 @@ function* getEvents() {
 }
 
 
+function* eventsPage(action) {
+    yield getEvents(action);
+    yield put({type: 'EVENTS_PAGE'});
+}
+
 function* eventPage(action) {
     yield getEvent(action);
-    // yield put({type: 'EVENTS_PAGE'});
+    yield put({type: 'EVENT_PAGE', payload: {id: action.id}});
 }
 
 
 export default function* rootSaga() {
-    yield takeLatest('EVENTS', getEvents);
+    yield takeLatest('EVENTS', eventsPage);
     yield takeLatest('EVENT', eventPage);
 };
