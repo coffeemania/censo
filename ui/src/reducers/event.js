@@ -2,11 +2,10 @@ export default (state = 'EVENT', action = {}) => {
 
     switch (action.type) {
 
-        // case 'EVENT':
-        //
-        //     return {
-        //         ...state
-        //     };
+        case 'GET_EVENT_STARTED':
+
+            // clean the event
+            return {};
 
         case 'GET_EVENT_SUCCESS':
 

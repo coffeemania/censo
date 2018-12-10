@@ -9,6 +9,7 @@ import {getEvent, getEvents, getVehicles} from '../reducers/selectors'
 
 function* fetchEvent(id) {
     try {
+        yield put({type: 'GET_EVENT_STARTED'});
         const event = yield call(() => Backend.get(`/event/${id}`));
         yield put({type: 'GET_EVENT_SUCCESS', event: event.data});
     } catch (e) {
