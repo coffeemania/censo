@@ -16,7 +16,8 @@ class EventList extends Component {
                 </td>
                 <td>{event.datetime}</td>
                 <td>{event.location}</td>
-                <td>{event.vehicle.model} [{event.vehicle.plate}]</td>
+                <td>{event.vehicle.model} / {event.vehicle.plate}</td>
+                {/* <td><img src={`https://www.car72.ru/nomer/rus/${event.vehicle.plate}.png`} /></td> */}
                 <td><a href={event.statusCheckUrl} rel='noopener noreferrer' target='_blank'>Check</a></td>
             </tr>
         ));
