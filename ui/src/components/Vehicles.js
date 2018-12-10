@@ -12,7 +12,7 @@ class EventList extends Component {
             <tr key={id} onClick={this.props.onPickVehicle.bind(null, id)}>
                 <td>{id}</td>
                 <td>{vehicle.model || 'неизвестно'}</td>
-                <td>{vehicle.plate} || 'не установлен'</td>
+                <td>{vehicle.plate || 'не установлен'}</td>
             </tr>
         ));
 
