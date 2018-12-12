@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Dashboard from '../containers/Dashboard';
+import EventListPagination from './EventListPagination';
 
 
 class EventList extends Component {
@@ -26,9 +27,10 @@ class EventList extends Component {
             <Dashboard>
                 <table className="ui very basic selectable stackable table">
                     <tbody>
-                        {eventArray}
+                    {eventArray}
                     </tbody>
                 </table>
+                <EventListPagination />
             </Dashboard>
         );
     }

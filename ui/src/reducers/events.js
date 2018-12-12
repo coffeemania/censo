@@ -5,7 +5,7 @@ export default (state = 'EVENTS', action = {}) => {
         case 'GET_EVENTS_SUCCESS':
 
             return {
-                ...state,
+                // ...state,
                 ...action.events
             };
 

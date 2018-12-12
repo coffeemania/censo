@@ -1,6 +1,6 @@
 import {all, call, put, fork, select, take} from 'redux-saga/effects';
 import Backend from '../services/backend';
-import {getEvent, getEvents, getVehicles} from '../reducers/selectors'
+import {getEvent, getEventsPagination, getVehicles} from '../selectors'
 
 
 /**
@@ -17,10 +17,10 @@ function* fetchEvent(id) {
     }
 }
 
-function* fetchEvents() {
+function* fetchEvents({page}) {
     try {
-        const events = yield call(() => Backend.get('/events'));
-        yield put({type: 'GET_EVENTS_SUCCESS', events: events.data});
+        const events = yield call(() => Backend.get(`/events?page=${page}`));
+        yield put({type: 'GET_EVENTS_SUCCESS', events: events.data.items});
     } catch (e) {
         yield put({type: 'GET_EVENTS_FAILED', message: e.message});
     }
@@ -49,8 +49,12 @@ function* loadEvent(id) {
 
 // Loads the events unless they're cached
 function* loadEvents() {
-    const cached = yield select(getEvents);
-    if (Object.keys(cached).length === 0) yield call(fetchEvents);
+    // const cached = yield select(getEvents);
+    // if (Object.keys(cached).length === 0) yield call(fetchEvents);
+
+    // no cache for now
+    const eventsPagination = yield select(getEventsPagination);
+    yield call(fetchEvents, eventsPagination);
 }
 
 // Loads the fetchVehicles unless they're cached

@@ -10,7 +10,9 @@ import reducers from '../reducers';
 
 const initialState = {
     events: {},
-    page: 1,
+    eventsPagination: {
+        page: 1
+    },
     eventDetails: {},
     event: {},   // removeme
     vehicles: {}

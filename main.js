@@ -1,13 +1,14 @@
 import Knex from 'knex';
 import {Model} from 'objection';
 import op from 'object-path';
-import { config } from 'dotenv';
+import {config} from 'dotenv';
 import Koa from 'koa';
 import Router from 'koa-router';
 import Cors from '@koa/cors';
 import BodyParser from 'koa-bodyparser';
 import Helmet from 'koa-helmet';
 import respond from 'koa-respond';
+import {Pageable, IndexedPage, paginate} from '@panderalabs/koa-pageable';
 // import passport from 'koa-passport';
 import routes from './routes';
 // import config from './config';
@@ -37,7 +38,7 @@ app.use(logRequests(log));
 app.use(Cors());
 app.use(BodyParser({
     enableTypes: ['json', 'text', 'form'],
-    jsonLimit: op.get(config, 'BodyParser.jsonLimit', '5mb') ,
+    jsonLimit: op.get(config, 'BodyParser.jsonLimit', '5mb'),
     strict: true,
     onerror: function (err, ctx) {
         ctx.throw('body parse error', 422);
@@ -46,6 +47,7 @@ app.use(BodyParser({
 
 // app.use(passport.initialize());
 
+app.use(paginate);
 app.use(respond());
 
 app.use(async (ctx, next) => {
