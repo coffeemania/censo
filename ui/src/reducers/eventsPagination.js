@@ -4,7 +4,7 @@ export default (state = '', action = {}) => {
 
         case 'EVENTS':
 
-            console.log(action);
+            // console.log(action);
 
             return {
                 ...state,

@@ -21,7 +21,7 @@ class EventList extends Component {
                 {/* <td><img src={`https://www.car72.ru/nomer/rus/${event.vehicle.plate}.png`} /></td> */}
                 <td><a href={event.statusCheckUrl} rel='noopener noreferrer' target='_blank'>Check</a></td>
             </tr>
-        ));
+        )).reverse();
 
         return (
             <Dashboard>
