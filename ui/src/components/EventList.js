@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {
+    Form
+} from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';
 import EventListPagination from './EventListPagination';
+import EventListFilter from './EventListFilter';
 
 
 class EventList extends Component {
@@ -25,12 +29,17 @@ class EventList extends Component {
 
         return (
             <Dashboard>
-                <table className="ui very basic selectable stackable table">
-                    <tbody>
-                    {eventArray}
-                    </tbody>
-                </table>
-                <EventListPagination />
+                <Form size='small'>
+                    <table className="ui very basic selectable stackable table">
+                        <thead>
+                            <EventListFilter />
+                        </thead>
+                        <tbody>
+                            {eventArray}
+                        </tbody>
+                    </table>
+                </Form>
+                <EventListPagination/>
             </Dashboard>
         );
     }

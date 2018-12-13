@@ -12,7 +12,7 @@ class EventsPagination extends Component {
 
         return (
             <Grid>
-                <Grid.Column floated='right' width={5}>
+                <Grid.Column textAlign='center'>
                     <Pagination
                         boundaryRange={0}
                         activePage={this.props.eventsPagination.page}

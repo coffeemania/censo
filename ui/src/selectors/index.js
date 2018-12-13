@@ -6,3 +6,7 @@ export const getEvents = (state) => state.events;
 export const getEventsPagination = (state) => ({
     ...state.eventsPagination
 });
+
+export const getEventsFilter = (state) => ({
+    ...state.eventsFilter
+});

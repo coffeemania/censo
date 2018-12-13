@@ -1,6 +1,6 @@
 import {all, call, put, fork, select, take} from 'redux-saga/effects';
 import Backend from '../services/backend';
-import {getEvent, getEventsPagination, getVehicles} from '../selectors'
+import {getEvent, getEventsPagination, getEventsFilter, getVehicles} from '../selectors';
 
 
 /**
@@ -17,9 +17,16 @@ function* fetchEvent(id) {
     }
 }
 
-function* fetchEvents({page}) {
+function* fetchEvents(eventFilter = {}, {page}) {
     try {
-        const events = yield call(() => Backend.get(`/events?page=${page}`));
+        const filterQuery = Object.entries(eventFilter)
+            .filter(([k, v]) => !!v)    // eslint-disable-line
+            .map(([k, v]) => `${k}=${v}`)
+            .join('&');
+
+        console.dir(filterQuery);
+
+        const events = yield call(() => Backend.get(`/events?page=${page}${filterQuery ? `&${filterQuery}` : ''}`));
         yield put({type: 'GET_EVENTS_SUCCESS', events: events.data.items});
     } catch (e) {
         yield put({type: 'GET_EVENTS_FAILED', message: e.message});
@@ -53,8 +60,9 @@ function* loadEvents() {
     // if (Object.keys(cached).length === 0) yield call(fetchEvents);
 
     // no cache for now
+    const eventsFilter = yield select(getEventsFilter);
     const eventsPagination = yield select(getEventsPagination);
-    yield call(fetchEvents, eventsPagination);
+    yield call(fetchEvents, eventsFilter, eventsPagination);
 }
 
 // Loads the fetchVehicles unless they're cached
@@ -84,6 +92,14 @@ function* watchLoadEventsPage() {
     }
 }
 
+// Invoke events fetching once the filter changed
+function* watchEventsFilterChanged() {
+    while (true) {
+        yield take('EVENTS_FILTER');
+        yield fork(loadEvents);
+    }
+}
+
 // Fetches data for the Vehicles
 function* watchLoadVehiclesPage() {
     while (true) {
@@ -95,12 +111,13 @@ function* watchLoadVehiclesPage() {
 
 /**
  * Root
-*/
+ */
 export default function* rootSaga() {
 
     yield all([
         fork(watchLoadEventPage),
         fork(watchLoadEventsPage),
+        fork(watchEventsFilterChanged),
         fork(watchLoadVehiclesPage)
     ]);
 

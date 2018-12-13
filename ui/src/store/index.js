@@ -13,6 +13,11 @@ const initialState = {
     eventsPagination: {
         page: 1
     },
+    eventsFilter: {
+        id: undefined,
+        location: undefined,
+        vehicle: undefined
+    },
     eventDetails: {},
     event: {},   // removeme
     vehicles: {}
