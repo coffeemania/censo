@@ -1,2 +1,2 @@
-export event from './event';
-export vehicle from './vehicle';
+export {Event} from './event';
+export {Vehicle} from './vehicle';

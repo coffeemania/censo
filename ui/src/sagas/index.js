@@ -126,5 +126,5 @@ export default function* rootSaga() {
         fork(watchLoadVehiclesPage)
     ]);
 
-    yield put({type: 'EVENTS'});
+    // yield put({type: 'EVENTS'});
 };

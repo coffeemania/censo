@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Pagination, Grid, Icon} from 'semantic-ui-react';
+import {Pagination, Grid} from 'semantic-ui-react';
 
 
 class EventsPagination extends Component {

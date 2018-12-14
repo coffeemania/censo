@@ -1,8 +1,8 @@
 import {Model} from 'objection';
-import Vehicle from './vehicle';
+import {Vehicle} from './vehicle';
 
 
-export default class Event extends Model {
+export class Event extends Model {
     static get tableName() {
         return 'events';
     }
@@ -10,6 +10,15 @@ export default class Event extends Model {
     static get defaultEagerAlgorithm() {
         return Model.JoinEagerAlgorithm;
     }
+
+    // static get defaultEagerOptions() {
+    //     return {
+    //         minimize: true,
+    //         separator: ':',
+    //         aliases: {},
+    //         joinOperation: 'innerJoin'
+    //     };
+    // }
 
     static get relationMappings() {
         return {

@@ -1,5 +1,5 @@
 import op from 'object-path';
-import Event from '../models/event';
+import {Event, Vehicle} from '../models';
 import moment from 'moment';
 
 
@@ -13,8 +13,9 @@ export const get = async (ctx) => {
     if (!id) throw new Error('Got empty id');
 
     const event = await Event.query()
-        .where('id', '=', id)
-        .eager('vehicle');
+        .alias('e')
+        .eager('vehicle')
+        .where('e.id', '=', id);
 
     ctx.ok({
         ...event.shift(),
@@ -22,4 +23,3 @@ export const get = async (ctx) => {
         statusCheckUrl: process.env.STATUS_CHECK_URL ? `${process.env.STATUS_CHECK_URL}${event.foreignId}` : event.foreignId
     });
 };
-

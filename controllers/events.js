@@ -1,7 +1,7 @@
 import moment from 'moment';
-import Event from '../models/event';
-import {normalize} from '../lib/utils';
 import {IndexablePage} from '@panderalabs/koa-pageable';
+import {Event} from '../models/event';
+import {normalize} from '../lib/utils';
 
 
 /**
@@ -11,8 +11,8 @@ import {IndexablePage} from '@panderalabs/koa-pageable';
 export const get = async (ctx) => {
 
     const filterMapping = {
-        // id: 'id',
-        location: 'location',
+        id: 'e.id',
+        location: 'e.location',
         vehicle: [
             'vehicle.plate',
             'vehicle.model'
@@ -29,11 +29,11 @@ export const get = async (ctx) => {
 
 
     const {results, total} = await Event.query()
-
+        .alias('e')
         .eager('vehicle')
 
         .where((builder) =>
-            filter.map(([k, v]) => {
+            filter.forEach(([k, v]) => {
                 const keys = filterMapping[k];
                 if (keys.constructor === Array) {
                     let result;
@@ -42,9 +42,9 @@ export const get = async (ctx) => {
                             builder.where(key, 'like', `%${v}%`)
                             : result.orWhere(key, 'like', `%${v}%`);
                     });
-                    return result;
+                } else {
+                    builder.where(keys, 'like', `%${v}%`);
                 }
-                return builder.where(keys, 'like', `%${v}%`);
             })
         )
 

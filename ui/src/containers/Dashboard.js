@@ -51,8 +51,8 @@ class Dashboard extends Component {
                             <Menu.Item>
                                 <Image size='tiny' src='/logo.png'/>
                             </Menu.Item>
-                            <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events ({this.props.eventCount})</Menu.Item>
-                            <Menu.Item as='a' onClick={this.props.onClickVehicles}>Vehicles ({this.props.vehicleCount})</Menu.Item>
+                            <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events</Menu.Item>
+                            <Menu.Item as='a' onClick={this.props.onClickVehicles}>Vehicles</Menu.Item>
                         </Container>
 
                     </Menu>
