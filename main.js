@@ -1,4 +1,5 @@
 import Knex from 'knex';
+import knexTinyLogger from 'knex-tiny-logger';
 import {Model} from 'objection';
 import op from 'object-path';
 import {config} from 'dotenv';
@@ -22,7 +23,7 @@ import knexConfig from './knexfile';
 config(); // dotenv
 
 
-const knex = Knex(knexConfig.development);
+const knex = knexTinyLogger(Knex(knexConfig.development));
 Model.knex(knex);
 
 const env = process.env.NODE_ENV || 'dev',

@@ -10,6 +10,7 @@
     "dotenv": "6.1.0",
     "esm": "^3.0.84",
     "knex": "^0.15.2",
+    "knex-tiny-logger": "^1.1.0",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^4.0.0",

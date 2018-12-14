@@ -1,6 +1,4 @@
 import moment from 'moment';
-import op from 'object-path';
-import {IndexablePage, Pageable, Sort} from '@panderalabs/koa-pageable';
 import Event from '../models/event';
 import {normalize} from '../lib/utils';
 
@@ -11,9 +9,14 @@ import {normalize} from '../lib/utils';
  */
 export const get = async (ctx) => {
 
-    const allowedFilter = [
-        'id', 'location', 'vehicle'
-    ];
+    const filterMapping = {
+        // id: 'id',
+        location: 'location',
+        vehicle: [
+            'vehicle.plate',
+            'vehicle.model'
+        ]
+    };
 
     // TODO
     const pageNumber = ctx.state.pageable.page || 1;
@@ -21,30 +24,32 @@ export const get = async (ctx) => {
     // const sort = ctx.state.pageable.sort;
 
     const filter = Object.entries(ctx.request.query)
-        .filter(([k, v]) => allowedFilter.includes(k));
+        .filter(([k, v]) => Object.keys(filterMapping).includes(k));
+
 
     const events = await Event.query()
 
         .eager('vehicle')
-        // .eager('vehicle(filtered)', {
-        //     filtered: (query) => {
-        //         query
-        //             .where('model', 'like', `%${ctx.request.query.vehicle}%`)
-        //             .orWhere('plate', 'like', `%${ctx.request.query.vehicle}%`)
-        //     }
-        // })
 
         .where((builder) =>
             filter.map(([k, v]) => {
-                if (k === 'vehicle') return;    // todo
-                return builder.where(k, 'like', `%${v}%`);
+                const keys = filterMapping[k];
+                if (keys.constructor === Array) {
+                    let result;
+                    keys.forEach(key => {
+                        result = !result ?
+                            builder.where(key, 'like', `%${v}%`)
+                            : result.orWhere(key, 'like', `%${v}%`);
+                    });
+                    return result;
+                }
+                return builder.where(keys, 'like', `%${v}%`);
             })
         )
 
         .orderBy('id', 'desc')
         .offset((pageNumber - 1) * pageSize)
         .limit(pageSize)
-
 
         .map((event) => ({
             ...event,

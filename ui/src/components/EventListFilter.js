@@ -17,7 +17,7 @@ class EventsFilter extends Component {
 
         return (
             <tr key={-1}>
-                <th><Input id='id' style={{width: '100px'}} icon='users' iconPosition='left' placeholder='id' onChange={this.onChangeFilter} value={this.props.id} /></th>
+                <th />{/* <Input id='id' style={{width: '100px'}} icon='users' iconPosition='left' placeholder='id' onChange={this.onChangeFilter} value={this.props.id} /></th> */}
                 <th />
                 <th />
                 <th><Input id='location' icon='users' iconPosition='left' placeholder='location' onChange={this.onChangeFilter} value={this.props.location} /></th>

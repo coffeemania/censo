@@ -7,6 +7,10 @@ export default class Event extends Model {
         return 'events';
     }
 
+    static get defaultEagerAlgorithm() {
+        return Model.JoinEagerAlgorithm;
+    }
+
     static get relationMappings() {
         return {
 
