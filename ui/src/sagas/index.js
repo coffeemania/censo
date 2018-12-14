@@ -17,17 +17,22 @@ function* fetchEvent(id) {
     }
 }
 
-function* fetchEvents(eventFilter = {}, {page}) {
+function* fetchEvents(eventFilter = {}, {page = 1}) {
     try {
         const filterQuery = Object.entries(eventFilter)
             .filter(([k, v]) => !!v)    // eslint-disable-line
             .map(([k, v]) => `${k}=${v}`)
             .join('&');
 
-        console.dir(filterQuery);
-
-        const events = yield call(() => Backend.get(`/events?page=${page}${filterQuery ? `&${filterQuery}` : ''}`));
-        yield put({type: 'GET_EVENTS_SUCCESS', events: events.data.items});
+        const events = yield call(() => Backend.get(`/events?page=${page - 1}${filterQuery ? `&${filterQuery}` : ''}`));
+        yield put({type: 'GET_EVENTS_SUCCESS', events: events.data.content, meta: {
+                page: events.data.number + 1,
+                pageSize: events.data.size,
+                total: events.data.totalElements,
+                totalPages: events.data.totalPages,
+                first: events.data.first,
+                last: events.data.last
+            }});
     } catch (e) {
         yield put({type: 'GET_EVENTS_FAILED', message: e.message});
     }

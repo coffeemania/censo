@@ -11,7 +11,12 @@ import reducers from '../reducers';
 const initialState = {
     events: {},
     eventsPagination: {
-        page: 1
+        page: 0,
+        pageSize: undefined,
+        total: undefined,
+        totalPages: undefined,
+        first: undefined,
+        last: undefined
     },
     eventsFilter: {
         id: undefined,

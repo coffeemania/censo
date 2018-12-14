@@ -10,20 +10,27 @@ class EventsPagination extends Component {
 
     render() {
 
+        const totalPages = this.props.total / this.props.pageSize;
+
         return (
             <Grid>
                 <Grid.Column textAlign='center'>
                     <Pagination
-                        boundaryRange={0}
-                        activePage={this.props.eventsPagination.page}
-                        onPageChange={this.onPickEventsPage}
-                        ellipsisItem={null}
-                        firstItem={{content: <Icon name='angle double left'/>, icon: true}}
-                        lastItem={{content: <Icon name='angle double right'/>, icon: true}}
-                        prevItem={{content: <Icon name='angle left'/>, icon: true}}
-                        nextItem={{content: <Icon name='angle right'/>, icon: true}}
+                        boundaryRange={1}
                         siblingRange={1}
-                        totalPages={10}
+                        activePage={this.props.page}
+                        totalPages={totalPages}
+                        onPageChange={this.onPickEventsPage}
+                        ellipsisItem={undefined}
+                        firstItem={null}
+                        lastItem={null}
+                        prevItem={null}
+                        nextItem={null}
+                        size='mini'
+                        // firstItem={this.props.first ? null : {content: <Icon name='angle double left'/>, icon: true}}
+                        // lastItem={this.props.last ? null : {content: <Icon name='angle double right'/>, icon: true}}
+                        // prevItem={this.props.first ? null : {content: <Icon name='angle left'/>, icon: true}}
+                        // nextItem={this.props.last ? null : {content: <Icon name='angle right'/>, icon: true}}
                     />
                 </Grid.Column>
             </Grid>
@@ -32,14 +39,16 @@ class EventsPagination extends Component {
 }
 
 EventsPagination.propTypes = {
-    eventsPagination: PropTypes.objectOf(PropTypes.shape({
-        page: PropTypes.number.isRequired,
-    })).isRequired,
+    page: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
+    first: PropTypes.bool.isRequired,
+    last: PropTypes.bool.isRequired,
     onPickEventsPage: PropTypes.func.isRequired
 };
 
 
-const mapStateToProps = ({events, eventsPagination}) => ({events, eventsPagination});
+const mapStateToProps = ({eventsPagination}) => eventsPagination;
 
 const mapDispatchToProps = (dispatch) => ({
     onPickEventsPage: (page) => dispatch({type: 'EVENTS', page})

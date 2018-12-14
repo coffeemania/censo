@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Event from '../models/event';
 import {normalize} from '../lib/utils';
+import {IndexablePage} from '@panderalabs/koa-pageable';
 
 
 /**
@@ -19,7 +20,7 @@ export const get = async (ctx) => {
     };
 
     // TODO
-    const pageNumber = ctx.state.pageable.page || 1;
+    const pageNumber = ctx.state.pageable.page || 0;
     const pageSize = ctx.state.pageable.size || 10;
     // const sort = ctx.state.pageable.sort;
 
@@ -27,7 +28,7 @@ export const get = async (ctx) => {
         .filter(([k, v]) => Object.keys(filterMapping).includes(k));
 
 
-    const events = await Event.query()
+    const {results, total} = await Event.query()
 
         .eager('vehicle')
 
@@ -48,18 +49,26 @@ export const get = async (ctx) => {
         )
 
         .orderBy('id', 'desc')
-        .offset((pageNumber - 1) * pageSize)
-        .limit(pageSize)
+        .page(pageNumber, pageSize);
 
-        .map((event) => ({
-            ...event,
-            datetime: moment(event.datetime).format('DD.MM.YYYY HH:mm'),
-            statusCheckUrl: process.env.STATUS_CHECK_URL ? `${process.env.STATUS_CHECK_URL}${event.foreignId}` : event.foreignId
-        }));
+    // .offset((pageNumber - 1) * pageSize)
+    // .limit(pageSize)
 
+    const events = results.map((event) => ({
+        ...event,
+        datetime: moment(event.datetime).format('DD.MM.YYYY HH:mm'),
+        statusCheckUrl: process.env.STATUS_CHECK_URL ? `${process.env.STATUS_CHECK_URL}${event.foreignId}` : event.foreignId
+    }));
 
-    ctx.ok({
-        items: normalize(events),
-        meta: ctx.state.pageable
-    });
+    const result = new IndexablePage(normalize(events), total, ctx.state.pageable);
+
+    ctx.ok(result);
+
+    // ctx.ok({
+    //     items: normalize(events),
+    //     meta: {
+    //         ...ctx.state.pageable,
+    //         total
+    //     }
+    // });
 };

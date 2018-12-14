@@ -2,9 +2,14 @@ export default (state = '', action = {}) => {
 
     switch (action.type) {
 
-        case 'EVENTS':
+        case 'GET_EVENTS_SUCCESS':
 
-            // console.log(action);
+            return {
+                ...state,
+                ...action.meta
+            };
+
+        case 'EVENTS':
 
             return {
                 ...state,
