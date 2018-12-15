@@ -1,6 +1,6 @@
 import {all, call, put, fork, select, take} from 'redux-saga/effects';
 import Backend from '../services/backend';
-import {getEvent, getEventsPagination, getEventsFilter, getVehicles} from '../selectors';
+import {getEventsPagination, getEventsFilter, getVehicles} from '../selectors';
 
 
 /**
@@ -54,8 +54,11 @@ function* fetchVehicles() {
 
 // Loads an event unless it's cached
 function* loadEvent(id) {
-    const cached = yield select(getEvent, id);
-    if (!cached) yield call(fetchEvent, id);
+    // const cached = yield select(getEvent, id);
+    // if (!cached) yield call(fetchEvent, id);
+
+    // no cache for now
+    yield call(fetchEvent, id);
 }
 
 

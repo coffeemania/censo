@@ -1,7 +1,7 @@
 import moment from 'moment';
 import {IndexablePage} from '@panderalabs/koa-pageable';
 import {Event} from '../models/event';
-import {normalize} from '../lib/utils';
+import {normalize, formatDateTime} from '../lib/utils';
 
 
 /**
@@ -30,7 +30,7 @@ export const get = async (ctx) => {
 
     const {results, total} = await Event.query()
         .alias('e')
-        .eager('vehicle')
+        .eager('[vehicle, appealHistory]')  // TODO count only
 
         .where((builder) =>
             filter.forEach(([k, v]) => {
@@ -53,7 +53,8 @@ export const get = async (ctx) => {
 
     const events = results.map((event) => ({
         ...event,
-        datetime: moment(event.datetime).format('DD.MM.YYYY HH:mm'),
+        datetime: formatDateTime(event.datetime),
+        appealHistory: event.appealHistory ? event.appealHistory.map((item) => ({...item, datetime: formatDateTime(item.datetime)})) : [],
         statusCheckUrl: process.env.STATUS_CHECK_URL ? `${process.env.STATUS_CHECK_URL}${event.foreignId}` : event.foreignId
     }));
 

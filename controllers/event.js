@@ -1,10 +1,8 @@
 import op from 'object-path';
-import moment from 'moment';
 import {Event} from '../models';
 import {Provider} from '../lib/Provider';
+import {formatDateTime} from '../lib/utils';
 
-
-const formatDateTime = (dt) => moment(dt).format('DD.MM.YYYY HH:mm');
 
 /**
  * Get the event

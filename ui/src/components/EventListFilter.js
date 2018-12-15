@@ -23,6 +23,7 @@ class EventsFilter extends Component {
                 <th><Input id='location' icon='users' iconPosition='left' placeholder='location' onChange={this.onChangeFilter} value={this.props.location} /></th>
                 <th><Input id='vehicle' icon='users' iconPosition='left' placeholder='vehicle' onChange={this.onChangeFilter} value={this.props.vehicle}/></th>
                 <th />
+                <th />
             </tr>
         );
     }
