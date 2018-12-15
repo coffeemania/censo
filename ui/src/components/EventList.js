@@ -2,9 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-    Button,
-    Label,
-    Icon,
     Form
 } from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';

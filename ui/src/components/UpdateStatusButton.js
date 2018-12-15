@@ -19,8 +19,12 @@ const UpdateStatusButton = ({id, count, onCheckStatus}) => count > 0 ?
 
 UpdateStatusButton.propTypes = {
     id: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
+    count: PropTypes.number,
     onCheckStatus: PropTypes.func.isRequired
+};
+
+UpdateStatusButton.defaultProps = {
+    count: 0
 };
 
 export default UpdateStatusButton;

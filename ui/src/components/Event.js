@@ -11,9 +11,21 @@ import {
 } from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';
 import History from './History';
+import UpdateStatusButton from './UpdateStatusButton';
 
 
 class Event extends Component {
+
+    constructor(props, context) {
+        super(props, context);
+        this.onCheckStatus = this.onCheckStatus.bind(this);
+    }
+
+    onCheckStatus(e, id) {
+        e.stopPropagation();
+        this.props.onCheckStatus(id);
+    }
+
 
     render() {
 
@@ -50,7 +62,9 @@ class Event extends Component {
                             <Item>
                                 <Item.Content>
                                     <Item.Header as='a'>History</Item.Header>
-                                    <Item.Meta><a href={this.props.statusCheckUrl}>Check status</a></Item.Meta>
+                                    <Item.Meta>
+                                        <UpdateStatusButton id={this.props.id} onCheckStatus={this.onCheckStatus}/>
+                                    </Item.Meta>
                                     <Item.Description>
                                         <History history={this.props.appealHistory}/>
                                     </Item.Description>
@@ -78,7 +92,8 @@ Event.propTypes = {
     status: PropTypes.string,
     statusCheckUrl: PropTypes.string,
     location: PropTypes.string,
-    appealHistory: PropTypes.array  // TODO
+    appealHistory: PropTypes.array,  // TODO
+    onCheckStatus: PropTypes.func.isRequired
 };
 
 Event.defaultProps = {
@@ -97,5 +112,9 @@ Event.defaultProps = {
 
 const mapStateToProps = ({event}) => event;
 
-export default connect(mapStateToProps)(Event);
+const mapDispatchToProps = (dispatch) => ({
+    onCheckStatus: (id) => dispatch({type: 'EVENT_CHECK_STATUS', payload: {id}})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Event);
 
