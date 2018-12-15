@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-// import Loadable from 'react-loadable';
 import {connect} from 'react-redux';
 import {
     Container,
@@ -11,6 +10,7 @@ import {
     Loader
 } from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';
+import History from './History';
 
 
 class Event extends Component {
@@ -34,7 +34,6 @@ class Event extends Component {
                                     <Item.Meta>
                                         <span>{this.props.vehicle.model}</span>
                                     </Item.Meta>
-                                    <Item.Description><a href={this.props.statusCheckUrl}>Check status</a></Item.Description>
                                     <Item.Extra>
                                         <Icon name='calendar' alternate='true' outline='true' />
                                         {this.props.datetime}
@@ -46,6 +45,15 @@ class Event extends Component {
                                     <Item.Meta>
                                         <span>{this.props.status}</span>
                                     </Item.Meta>
+                                </Item.Content>
+                            </Item>
+                            <Item>
+                                <Item.Content>
+                                    <Item.Header as='a'>History</Item.Header>
+                                    <Item.Meta><a href={this.props.statusCheckUrl}>Check status</a></Item.Meta>
+                                    <Item.Description>
+                                        <History history={this.props.appealHistory}/>
+                                    </Item.Description>
                                 </Item.Content>
                             </Item>
                         </Item.Group>
@@ -69,7 +77,8 @@ Event.propTypes = {
     datetime: PropTypes.string,
     status: PropTypes.string,
     statusCheckUrl: PropTypes.string,
-    location: PropTypes.string
+    location: PropTypes.string,
+    appealHistory: PropTypes.array  // TODO
 };
 
 Event.defaultProps = {
