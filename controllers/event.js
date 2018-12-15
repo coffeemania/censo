@@ -43,7 +43,7 @@ export const getAppealStatus = async (ctx) => {
 
     if (!eventForeignId) throw new Error('Got no event');
 
-    const result = await Provider.getAppealStatus(eventForeignId);
+    const result = await Provider.getAppealStatus(id, eventForeignId);
 
     ctx.ok(result);
 };

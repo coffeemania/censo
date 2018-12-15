@@ -5,7 +5,7 @@ exports.up = knex => knex.schema
 
         table.integer('eventId').notNullable();
 
-        table.dateTime('datetime').notNullable();
+        table.dateTime('datetime').notNullable().defaultTo(knex.fn.now());
 
         table.string('appealDate', 16);
 
@@ -16,11 +16,6 @@ exports.up = knex => knex.schema
         table.string('genericNumber', 32);
 
         table.text('rawStatus')
-            .notNullable();
-
-        table.text('status');
-
-        table.integer('vehicleId')
             .notNullable();
     });
 
