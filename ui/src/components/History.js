@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
-    List
+    Container,
+    Comment,
+    Segment
 } from 'semantic-ui-react'
 
 
@@ -10,25 +12,28 @@ class History extends Component {
     render() {
 
         const history = this.props.history.map((item) => (
-            <List.Item>
-                <List.Icon name='envelope outline' size='large' verticalAlign='middle'/>
-                <List.Content>
-                    <List.Header>{item.datetime}</List.Header>
-                    <List.Content><code>{item.rawStatus}</code></List.Content>
-                    <List size='mini'>
-                        <List.Item>Дата обращения: {item.appealDate}</List.Item>
-                        <List.Item>Дата регистрации: {item.acceptDate}</List.Item>
-                        <List.Item>Внутренний ID провайдера: {item.genericId}</List.Item>
-                        <List.Item>Внутренний номер провайдера: {item.genericNumber}</List.Item>
-                    </List>
-                </List.Content>
-            </List.Item>
+            <Segment raised>
+                <Comment>
+                    <Comment.Avatar src='/gibdd_logo.png' />
+                    <Comment.Content>
+                        <Comment.Author>ГИБДД</Comment.Author>
+                        <Comment.Metadata>{item.datetime}</Comment.Metadata>
+                        <Comment.Text>{item.rawStatus}</Comment.Text>
+                        <Comment.Actions>Дата обращения: {item.appealDate}</Comment.Actions>
+                        <Comment.Actions>Дата регистрации: {item.acceptDate}</Comment.Actions>
+                        <Comment.Actions>Внутренний ID провайдера: {item.genericId}</Comment.Actions>
+                        <Comment.Actions>Внутренний номер провайдера: {item.genericNumber}</Comment.Actions>
+                    </Comment.Content>
+                </Comment>
+            </Segment>
         ));
 
         return (
-            <List divided relaxed size='large'>
-                {history}
-            </List>
+            <Container fluid>
+                <Comment.Group>
+                    {history}
+                </Comment.Group>
+            </Container>
         );
     }
 }
