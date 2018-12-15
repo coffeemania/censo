@@ -1,4 +1,4 @@
-import {all, call, put, fork, select, take} from 'redux-saga/effects';
+import {all, call, put, fork, select, take, takeLatest} from 'redux-saga/effects';
 import Backend from '../services/backend';
 import {getEventsPagination, getEventsFilter, getVehicles} from '../selectors';
 
@@ -17,8 +17,20 @@ function* fetchEvent(id) {
     }
 }
 
+function* updateEventStatus({payload: {id}}) {
+    try {
+        yield put({type: 'UPDATE_EVENT_STATUS_STARTED'});
+        const {data} = yield call(() => Backend.get(`/event/${id}/status`));
+        yield put({type: 'UPDATE_EVENT_STATUS_SUCCESS', eventStatusItem: data});
+    } catch (e) {
+        yield put({type: 'UPDATE_EVENT_STATUS_FAILED', message: e.message});
+    }
+}
+
+
 function* fetchEvents(eventFilter = {}, {page = 1}) {
     try {
+        yield put({type: 'GET_EVENTS_STARTED'});
         const filterQuery = Object.entries(eventFilter)
             .filter(([k, v]) => !!v)    // eslint-disable-line
             .map(([k, v]) => `${k}=${v}`)
@@ -40,6 +52,7 @@ function* fetchEvents(eventFilter = {}, {page = 1}) {
 
 function* fetchVehicles() {
     try {
+        yield put({type: 'GET_VEHICLES_STARTED'});
         const vehicles = yield call(() => Backend.get('/vehicles'));
         yield put({type: 'GET_VEHICLES_SUCCESS', vehicles: vehicles.data});
     } catch (e) {
@@ -128,6 +141,8 @@ export default function* rootSaga() {
         fork(watchEventsFilterChanged),
         fork(watchLoadVehiclesPage)
     ]);
+
+    yield takeLatest('EVENT_CHECK_STATUS', updateEventStatus);
 
     // yield put({type: 'EVENTS'});
 };

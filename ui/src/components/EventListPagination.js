@@ -10,8 +10,6 @@ class EventsPagination extends Component {
 
     render() {
 
-        const totalPages = this.props.total / this.props.pageSize;
-
         return (
             <Grid>
                 <Grid.Column textAlign='center'>
@@ -19,7 +17,7 @@ class EventsPagination extends Component {
                         boundaryRange={1}
                         siblingRange={1}
                         activePage={this.props.page}
-                        totalPages={totalPages}
+                        totalPages={this.props.totalPages}
                         onPageChange={this.onPickEventsPage}
                         ellipsisItem={undefined}
                         firstItem={null}
@@ -42,6 +40,7 @@ EventsPagination.propTypes = {
     page: PropTypes.number.isRequired,
     pageSize: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
     first: PropTypes.bool.isRequired,
     last: PropTypes.bool.isRequired,
     onPickEventsPage: PropTypes.func.isRequired

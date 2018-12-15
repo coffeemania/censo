@@ -42,17 +42,19 @@ class EventList extends Component {
 
         return (
             <Dashboard>
-                <Form size='small'>
-                    <table className="ui very basic selectable stackable table">
-                        <thead>
-                        <EventListFilter/>
-                        </thead>
-                        <tbody className='eventlist'>
-                        {eventArray}
-                        </tbody>
-                    </table>
-                </Form>
-                <EventListPagination/>
+                <div>
+                    <Form size='small'>
+                        <table className="ui very basic selectable stackable table">
+                            <thead>
+                            <EventListFilter/>
+                            </thead>
+                            <tbody className='eventlist'>
+                            {eventArray}
+                            </tbody>
+                        </table>
+                    </Form>
+                    {eventArray.length > 0 ? <EventListPagination/> : <div/>}
+                </div>
             </Dashboard>
         );
     }

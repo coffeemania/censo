@@ -1,4 +1,6 @@
-export default (state = 'EVENT', action = {}) => {
+export default (prevState = 'EVENT', action = {}) => {
+
+    const state = {...prevState};
 
     switch (action.type) {
 
@@ -12,6 +14,17 @@ export default (state = 'EVENT', action = {}) => {
             return {
                 ...state,
                 ...action.event
+            };
+
+        case 'UPDATE_EVENT_STATUS_SUCCESS':
+
+            // TODO linter
+            state.appealHistory.push(action.eventStatusItem);
+
+            console.dir(state);
+
+            return {
+                ...state
             };
 
 

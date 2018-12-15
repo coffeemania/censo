@@ -63,7 +63,7 @@ class Event extends Component {
                                 <Item.Content>
                                     <Item.Header as='a'>History</Item.Header>
                                     <Item.Meta>
-                                        <UpdateStatusButton id={this.props.id} onCheckStatus={this.onCheckStatus}/>
+                                        <UpdateStatusButton id={String(this.props.id)} onCheckStatus={this.onCheckStatus}/>
                                     </Item.Meta>
                                     <Item.Description>
                                         <History history={this.props.appealHistory}/>
@@ -90,9 +90,17 @@ Event.propTypes = {
     ]),
     datetime: PropTypes.string,
     status: PropTypes.string,
-    statusCheckUrl: PropTypes.string,
     location: PropTypes.string,
-    appealHistory: PropTypes.array,  // TODO
+    // appealHistory: PropTypes.arrayOf(PropTypes.shape({
+    //     id: PropTypes.number.isRequired,
+    //     eventId: PropTypes.number.isRequired,
+    //     datetime: PropTypes.string.isRequired,
+    //     appealDate: PropTypes.string.isRequired,
+    //     acceptDate: PropTypes.string.isRequired,
+    //     genericId: PropTypes.string.isRequired,
+    //     genericNumber: PropTypes.string.isRequired,
+    //     rawStatus: PropTypes.string.isRequired
+    // })).isRequired(),
     onCheckStatus: PropTypes.func.isRequired
 };
 
@@ -105,8 +113,8 @@ Event.defaultProps = {
     },
     datetime: '.....',
     status: '.....',
-    statusCheckUrl: '.....',
-    location: '.....'
+    location: '.....',
+    appealHistory: []
 };
 
 
