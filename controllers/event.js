@@ -15,7 +15,7 @@ export const get = async (ctx) => {
 
     const event = await Event.query()
         .alias('e')
-        .eager('vehicle')
+        .eager('[vehicle, appealHistory]')
         .where('e.id', '=', id);
 
     ctx.ok({

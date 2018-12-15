@@ -1,5 +1,6 @@
 import {Model} from 'objection';
 import {Vehicle} from './vehicle';
+import {AppealHistory} from './appealHistory';
 
 
 export class Event extends Model {
@@ -29,6 +30,14 @@ export class Event extends Model {
                 join: {
                     from: 'events.vehicleId',
                     to: 'vehicles.id'
+                }
+            },
+            appealHistory: {
+                relation: Model.HasManyRelation,
+                modelClass: AppealHistory,
+                join: {
+                    from: 'events.id',
+                    to: 'appeals_history.eventId'
                 }
             }
         };

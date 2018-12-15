@@ -47,12 +47,9 @@ export const get = async (ctx) => {
                 }
             })
         )
-
         .orderBy('id', 'desc')
         .page(pageNumber, pageSize);
 
-    // .offset((pageNumber - 1) * pageSize)
-    // .limit(pageSize)
 
     const events = results.map((event) => ({
         ...event,
@@ -63,12 +60,4 @@ export const get = async (ctx) => {
     const result = new IndexablePage(normalize(events), total, ctx.state.pageable);
 
     ctx.ok(result);
-
-    // ctx.ok({
-    //     items: normalize(events),
-    //     meta: {
-    //         ...ctx.state.pageable,
-    //         total
-    //     }
-    // });
 };
