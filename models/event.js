@@ -8,9 +8,9 @@ export class Event extends Model {
         return 'events';
     }
 
-    // static get defaultEagerAlgorithm() {
-    //     return Model.JoinEagerAlgorithm;
-    // }
+    static get defaultEagerAlgorithm() {
+        return Model.JoinEagerAlgorithm;
+    }
 
     // static get defaultEagerOptions() {
     //     return {

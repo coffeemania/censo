@@ -30,16 +30,16 @@ export const get = async (ctx) => {
 
     const {results, total} = await Event.query()
         .alias('e')
+        .select('e.*')
         .select('ah.*')
-        // .eager('[vehicle, appealHistory]')  // TODO count only
-        .eager('vehicle')  // TODO count only
+        .eager('vehicle')
 
         .leftJoin(
             AppealHistory.query()
                 .alias('ah')
                 .select('eventId')
                 .count('id')
-                .whereIn('ah.eventId', [150, 149])
+                // .whereIn('ah.eventId', 'parent:id')
                 .groupBy('ah.eventId')
                 .as('ah'),
             'ah.eventId',
@@ -63,14 +63,6 @@ export const get = async (ctx) => {
         )
         .orderBy('id', 'desc')
         .page(pageNumber, pageSize);
-
-    // const history = await Event.loadRelated(results, 'appealHistory');
-
-    const history = await AppealHistory.query()
-        .select('eventId')
-        .count('id')
-        .whereIn('eventId', [150, 149])
-        .groupBy('eventId');
 
 
     const events = results.map((event) => ({
