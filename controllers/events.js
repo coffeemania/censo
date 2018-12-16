@@ -1,6 +1,6 @@
-import moment from 'moment';
+import {ref} from 'objection';
 import {IndexablePage} from '@panderalabs/koa-pageable';
-import {Event} from '../models/event';
+import {Event, AppealHistory} from '../models';
 import {normalize, formatDateTime} from '../lib/utils';
 
 
@@ -30,7 +30,21 @@ export const get = async (ctx) => {
 
     const {results, total} = await Event.query()
         .alias('e')
-        .eager('[vehicle, appealHistory]')  // TODO count only
+        .select('ah.*')
+        // .eager('[vehicle, appealHistory]')  // TODO count only
+        .eager('vehicle')  // TODO count only
+
+        .leftJoin(
+            AppealHistory.query()
+                .alias('ah')
+                .select('eventId')
+                .count('id')
+                .whereIn('ah.eventId', [150, 149])
+                .groupBy('ah.eventId')
+                .as('ah'),
+            'ah.eventId',
+            'e.id'
+        )
 
         .where((builder) =>
             filter.forEach(([k, v]) => {
@@ -49,6 +63,14 @@ export const get = async (ctx) => {
         )
         .orderBy('id', 'desc')
         .page(pageNumber, pageSize);
+
+    // const history = await Event.loadRelated(results, 'appealHistory');
+
+    const history = await AppealHistory.query()
+        .select('eventId')
+        .count('id')
+        .whereIn('eventId', [150, 149])
+        .groupBy('eventId');
 
 
     const events = results.map((event) => ({
