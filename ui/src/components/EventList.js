@@ -36,7 +36,7 @@ class EventList extends Component {
                 <td>{event.vehicle.model} / {event.vehicle.plate}</td>
                 {/* <td><img src={`https://www.car72.ru/nomer/rus/${event.vehicle.plate}.png`} /></td> */}
 
-                <td><UpdateStatusButton id={id} count={event.appealHistory.length} onCheckStatus={this.onCheckStatus}/></td>
+                <td><UpdateStatusButton id={id} count={event.historyCount} onCheckStatus={this.onCheckStatus}/></td>
             </tr>
         )).reverse();
 
@@ -68,7 +68,7 @@ EventList.propTypes = {
         vehicle: PropTypes.object.isRequired,
         status: PropTypes.string.isRequired,
         foreignId: PropTypes.string.isRequired,
-        appealHistory: PropTypes.array
+        historyCount: PropTypes.number
     })).isRequired,
     onPickEvent: PropTypes.func.isRequired,
     onCheckStatus: PropTypes.func.isRequired

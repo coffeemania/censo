@@ -38,7 +38,7 @@ export const get = async (ctx) => {
             AppealHistory.query()
                 .alias('ah')
                 .select('eventId')
-                .count('id')
+                .count('id as historyCount')
                 // .whereIn('ah.eventId', 'parent:id')
                 .groupBy('ah.eventId')
                 .as('ah'),
