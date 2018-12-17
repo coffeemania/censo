@@ -11,6 +11,8 @@ class History extends Component {
 
     render() {
 
+        console.dir(this.props.history);
+
         const history = this.props.history.reverse().map((item) => (
             <Segment key={item.id} raised>
                 <Comment>
@@ -40,6 +42,7 @@ class History extends Component {
 
 // TODO
 History.propTypes = {
+    history: PropTypes.array
     // history: PropTypes.arrayOf(PropTypes.shape({
     //     id: PropTypes.number.isRequired,
     //     eventId: PropTypes.number.isRequired,

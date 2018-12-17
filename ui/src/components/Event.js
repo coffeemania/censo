@@ -21,11 +21,15 @@ class Event extends Component {
         this.onCheckStatus = this.onCheckStatus.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+        console.dir(nextProps);
+    }
+
     onCheckStatus(e, id) {
         e.stopPropagation();
         this.props.onCheckStatus(id);
     }
-
 
     render() {
 
@@ -91,6 +95,7 @@ Event.propTypes = {
     datetime: PropTypes.string,
     status: PropTypes.string,
     location: PropTypes.string,
+    appealHistory: PropTypes.array,
     // appealHistory: PropTypes.arrayOf(PropTypes.shape({
     //     id: PropTypes.number.isRequired,
     //     eventId: PropTypes.number.isRequired,
@@ -121,7 +126,7 @@ Event.defaultProps = {
 const mapStateToProps = ({event}) => event;
 
 const mapDispatchToProps = (dispatch) => ({
-    onCheckStatus: (id) => dispatch({type: 'EVENT_CHECK_STATUS', payload: {id}})
+    onCheckStatus: (id) => dispatch({type: 'EVENT_CHECK_STATUS', payload: {id}, referer: 'Event'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Event);

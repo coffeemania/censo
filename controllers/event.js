@@ -48,5 +48,8 @@ export const getAppealStatus = async (ctx) => {
 
     const result = await Provider.getAppealStatus(id, eventForeignId);
 
-    ctx.ok(result);
+    ctx.ok({
+        ...result,
+        datetime: formatDateTime(result.datetime)
+    });
 };

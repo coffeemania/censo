@@ -18,13 +18,14 @@ export default (prevState = 'EVENT', action = {}) => {
 
         case 'UPDATE_EVENT_STATUS_SUCCESS':
 
+            if (action.referer !== 'Event') return state;
+
             // TODO linter
             state.appealHistory.push(action.eventStatusItem);
 
-            console.dir(state);
-
             return {
-                ...state
+                ...state,
+                lastUpdated: action.eventStatusItem.datetime
             };
 
 

@@ -17,11 +17,11 @@ function* fetchEvent(id) {
     }
 }
 
-function* updateEventStatus({payload: {id}}) {
+function* updateEventStatus({payload: {id}, referer}) {
     try {
         yield put({type: 'UPDATE_EVENT_STATUS_STARTED'});
         const {data} = yield call(() => Backend.get(`/event/${id}/status`));
-        yield put({type: 'UPDATE_EVENT_STATUS_SUCCESS', eventStatusItem: data});
+        yield put({type: 'UPDATE_EVENT_STATUS_SUCCESS', eventStatusItem: data, referer});
     } catch (e) {
         yield put({type: 'UPDATE_EVENT_STATUS_FAILED', message: e.message});
     }

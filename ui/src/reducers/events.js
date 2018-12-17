@@ -1,4 +1,10 @@
-export default (state = 'EVENTS', action = {}) => {
+import op from 'object-path'
+
+
+export default (prevState = 'EVENTS', action = {}) => {
+
+    const state = {...prevState};
+
 
     switch (action.type) {
 
@@ -8,6 +14,19 @@ export default (state = 'EVENTS', action = {}) => {
                 // ...state,
                 ...action.events
             };
+
+        case 'UPDATE_EVENT_STATUS_SUCCESS':
+
+            if (action.referer !== 'EventList') return state;
+
+            const {eventId} = action.eventStatusItem;
+            let historyCount = op.get(state, [eventId, 'historyCount'], 0);
+            op.set(state, [eventId, 'historyCount'], ++historyCount);
+
+            return {
+                ...state
+            };
+
 
 
         default:
