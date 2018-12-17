@@ -31,7 +31,8 @@ export const get = async (ctx) => {
     const {results, total} = await Event.query()
         .alias('e')
         .select('e.*')
-        .select('ah.*')
+        .select('ah.historyCount')
+        .select('ebv.eventCount')
         .eager('vehicle')
 
         .leftJoin(
@@ -44,6 +45,17 @@ export const get = async (ctx) => {
                 .as('ah'),
             'ah.eventId',
             'e.id'
+        )
+
+        .leftJoin(
+            Event.query()
+                .alias('ebv')
+                .select('vehicleId')
+                .count('id as eventCount')
+                .groupBy('ebv.vehicleId')
+                .as('ebv'),
+            'e.vehicleId',
+            'ebv.vehicleId'
         )
 
         .where((builder) =>

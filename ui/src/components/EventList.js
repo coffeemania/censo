@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-    Form
+    Form, Icon,
+    Label, Segment
 } from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';
 import EventListPagination from './EventListPagination';
@@ -29,11 +30,14 @@ class EventList extends Component {
             <tr key={id} onClick={this.props.onPickEvent.bind(null, id)}>
                 <td className=''>{id}</td>
                 <td>
-                    <button className='ui tiny basic button green' type='button'>{event.status}</button>
+                    <Label color='green' horizontal basic>{event.status}</Label>
                 </td>
                 <td>{event.datetime}</td>
                 <td>{event.location}</td>
-                <td>{event.vehicle.model} / {event.vehicle.plate}</td>
+                <td>
+                    {event.vehicle.model} <Icon name='car' outline='true' /><strong>{event.vehicle.plate}</strong>&nbsp;&nbsp;&nbsp;
+                    <Label color='grey' horizontal basic>{event.eventCount}</Label>
+                </td>
                 {/* <td><img src={`https://www.car72.ru/nomer/rus/${event.vehicle.plate}.png`} /></td> */}
 
                 <td><UpdateStatusButton id={id} count={event.historyCount} onCheckStatus={this.onCheckStatus}/></td>
