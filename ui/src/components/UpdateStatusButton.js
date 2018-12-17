@@ -7,13 +7,13 @@ const UpdateStatusButton = ({id, count, onCheckStatus}) => count > 0 ?
     (
         <Button as='div' size='tiny' labelPosition='right' onClick={(e) => onCheckStatus(e, id)}>
             <Button basic color='green' size='tiny'>
-                <Icon name='fork'/>Update
+                <Icon name='refresh'/>Update
             </Button>
             <Label as='a' color='green' pointing='left'>{count}</Label>
         </Button>
     ) : (
         <Button basic color='green' size='tiny' onClick={(e) => onCheckStatus(e, id)}>
-            <Icon name='fork'/>Update
+            <Icon name='refresh'/>Update
         </Button>
     );
 

@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {
+    Button,
     Container,
+    Icon,
     Image,
     Menu,
     Visibility
@@ -47,12 +49,21 @@ class Dashboard extends Component {
                     <Menu borderless fixed={this.state.menuFixed ? 'top' : undefined}
                           style={this.state.menuFixed ? this.fixedMenuStyle : this.menuStyle}>
 
-                        <Container text>
+                        <Container>
                             <Menu.Item>
                                 <Image size='tiny' src='/logo.png'/>
                             </Menu.Item>
                             <Menu.Item xheader='true' onClick={this.props.onClickEvents}>Events</Menu.Item>
                             <Menu.Item as='a' onClick={this.props.onClickVehicles}>Vehicles</Menu.Item>
+
+                            <Menu.Menu position='right'>
+                                <Menu.Item>
+                                    <Button className='right aligned' color='green' size='small' onClick={this.props.onAddEvent}>
+                                        <Icon name='add square'/>Add event
+                                    </Button>
+                                </Menu.Item>
+                            </Menu.Menu>
+
                         </Container>
 
                     </Menu>
@@ -68,16 +79,17 @@ class Dashboard extends Component {
 
 
 Dashboard.propTypes = {
-    eventCount: PropTypes.number,
-    vehicleCount: PropTypes.number,
+    // eventCount: PropTypes.number,
+    // vehicleCount: PropTypes.number,
     children: PropTypes.element.isRequired,
     onClickEvents: PropTypes.func.isRequired,
-    onClickVehicles: PropTypes.func.isRequired
+    onClickVehicles: PropTypes.func.isRequired,
+    onAddEvent: PropTypes.func.isRequired
 };
 
 Dashboard.defaultProps = {
-    eventCount: 0,
-    vehicleCount: 0
+    // eventCount: 0,
+    // vehicleCount: 0
 };
 
 
@@ -88,7 +100,8 @@ const mapStateToProps = ({events, vehicles}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onClickEvents: () => dispatch({type: 'EVENTS'}),
-    onClickVehicles: () => dispatch({type: 'VEHICLES'})
+    onClickVehicles: () => dispatch({type: 'VEHICLES'}),
+    onAddEvent: () => dispatch({type: 'EVENT_ADD'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

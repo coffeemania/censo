@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {
-    Form, Icon,
-    Label, Segment
+    Container,
+    Button,
+    Form,
+    Icon,
+    Label
 } from 'semantic-ui-react';
 import Dashboard from '../containers/Dashboard';
 import EventListPagination from './EventListPagination';
@@ -40,7 +43,7 @@ class EventList extends Component {
                 </td>
                 {/* <td><img src={`https://www.car72.ru/nomer/rus/${event.vehicle.plate}.png`} /></td> */}
 
-                <td><UpdateStatusButton id={id} count={event.historyCount} onCheckStatus={this.onCheckStatus}/></td>
+                <td className='right aligned'><UpdateStatusButton id={id} count={event.historyCount} onCheckStatus={this.onCheckStatus}/></td>
             </tr>
         )).reverse();
 

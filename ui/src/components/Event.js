@@ -21,11 +21,6 @@ class Event extends Component {
         this.onCheckStatus = this.onCheckStatus.bind(this);
     }
 
-    componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
-        console.dir(nextProps);
-    }
-
     onCheckStatus(e, id) {
         e.stopPropagation();
         this.props.onCheckStatus(id);
